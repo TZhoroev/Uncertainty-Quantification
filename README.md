@@ -25,16 +25,50 @@ This topics covers the following topics:
  
  [Project 2](https://github.com/TZhoroev/Uncertainty-Quantification/tree/main/Project%202)
  
-  - Learned how to use provided observational data to calculate the model's parameters and parameter distributions.
-  - Formulate and effectively solve a constrained or unconstrained optimization problem depending on the physical and biological restrictions of the parameters.
+  - Learned how to use the provided observational data to calculate the model's parameters and parameter distributions.
+  - Create and solve a constrained or unconstrained optimization problem based on the physical and biological constraints of the parameters. 
 
- 1. [Problem 1: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%202/Problem1.m)
- 2. [Problem 2: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%202/Problem2.m)
- 3. [Problem 3: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%202/Problem3.m)
+ 1. [Problem 1: Using non-linear constraint optimization find the parameters of the heat model for copper rod.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%202/Problem1.m)
+ 2. [Problem 2: Compute OLS estimate for the model parameters and variance of the Helmholtz energy model.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%202/Problem2.m)
+ 3. [Problem 3: Find parameter distributions of the SIR model.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%202/Problem3.m)
  * *[Project Writeup](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%202/Project_2_writeup.pdf)*
  
  
  [Project 3](https://github.com/TZhoroev/Uncertainty-Quantification/tree/main/Project%202):
- 1. [Problem 1: ]()
- 2. [Problem 2: ]()
- 3. [Problem 3: ]()
+ 
+  - Learned how to obtain the parameter distributions using Bayesian methods.
+  - Discovered the theory and application of Markov Chain Monte Carlo methods for calculating posterior distributions. The advantages and disadvantages of this method in comparison to other adaptive methods.
+  - The following posterior estimation algorithms are covered:
+     -  Metropolis, Hamiltonian Monte Carlo, the Metropolis-adjusted Langevin algorithm, Delayed Rejection Adaptive Metropolis, etc., and their use cases. 
+  - The failure cases of the posterior sampling algorithms and Bayesian parameter estimation are covered.
+  - How to Apply Bayesian Methods to find the identifiable subset of parameters.
+  
+  
+ 1. [Problem 1: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%203/Problem1.m)
+ 2. [Problem 2: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%203/Problem2.m)
+ 3. [Problem 3: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%203/Problem3.m)
+  * *[Project Writeup](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%203/Project_3_writeup.pdf)*
+  
+  
+  [Project 4](https://github.com/TZhoroev/Uncertainty-Quantification/tree/main/Project%204):
+ 
+ 1. [Problem 1: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%204/Problem1.m)
+ 2. [Problem 2: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%204/Problem2.m)
+ 3. [Problem 3: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%204/Problem3a.m)
+ 4. [Problem 4: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%204/Problem4.m)
+  * *[Project Writeup](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%204/Project_4_writeup.pdf)*
+  
+  
+   [Project 5](https://github.com/TZhoroev/Uncertainty-Quantification/tree/main/Project%205):
+ 
+ 1. [Problem 1: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%205/Problem1.m)
+ 2. [Problem 2: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%205/Problem2.m)
+ 3. [Problem 3: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%205/Problem3.m)
+  * *[Project Writeup](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%205/Project_5_writeup.pdf)*
+  
+     [Project 6](https://github.com/TZhoroev/Uncertainty-Quantification/tree/main/Project%206):
+ 
+ 1. [Problem 1: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%206/Final.m)
+  * *[Project Writeup](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%206/Project_6_writeup.pdf)*
+  
+  
