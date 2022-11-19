@@ -24,7 +24,6 @@ N=10^3;
 E = 90+ 20*rand(N,1);
 
 c = 0.09+.02*rand(N,1);
-
 de_dt =.1;
 e=.001;
 S_mean_E = zeros(N,1);
@@ -37,8 +36,3 @@ figure(1)
 scatter(E,S_mean_E,'filled')
 figure(2)
 scatter(c,S_mean_c,'filled')
-
-
-
-
-

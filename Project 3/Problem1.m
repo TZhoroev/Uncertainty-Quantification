@@ -1,17 +1,11 @@
 clear 
 close all
-
-
 data = [66.04 60.04 54.81 50.42 46.74 43.66 40.76 38.49 36.42 34.77 33.18 32.36 31.56 30.91 30.56];
-
 xdata = [10 14 18 22 26 30 34 38 42 46 50 54 58 62 66];
 xvals = 10:.1:70;
 u_amb = 22.28;
-
-%
 % Input dimensions and material constants
 %
-
 a = 0.95;   % cm
 b = 0.95;   % cm
 L = 70.0;   % cm
@@ -20,11 +14,8 @@ h = 0.0014;
 Q = -9.9265; 
 n = 15;
 p = 2;
-
-%
 % Construct constants and solution
 %
-
 gamma = sqrt(2*(a+b)*h/(a*b*k));
 gamma_h = (1/(2*h))*gamma;
 f1 = exp(gamma*L)*(h + k*gamma);
@@ -108,22 +99,15 @@ hvals = Q_MCMC(2,:);
 % Use kde to construct densities for Q and h.
 %
 
-% range_Q = max(Qvals) - min(Qvals);
-% range_h = max(hvals) - min(hvals);
-% Q_min = min(Qvals)-range_Q/10;
-% Q_max = max(Qvals)+range_Q/10;
-% h_min = min(hvals)-range_h/10;
-% h_max = max(hvals)+range_h/10;
+range_Q = max(Qvals) - min(Qvals);
+range_h = max(hvals) - min(hvals);
+Q_min = min(Qvals)-range_Q/10;
+Q_max = max(Qvals)+range_Q/10;
+h_min = min(hvals)-range_h/10;
+h_max = max(hvals)+range_h/10;
 [~,density_Q,Qmesh,~]=kde(Qvals);
 [~,density_h,hmesh,~]=kde(hvals);
-
-
 accept/N
-
-%
-% Plot solutions
-%
-
 figure(1)
 plot(Qvals,'-','linewidth',2)
 set(gca,'Fontsize',22);
@@ -173,11 +157,8 @@ xlabel('Parameter Q')
 ylabel('Parameter h')
 
 
-
-
 udata = data;
 clear data 
-
 a = 0.95;   % cm
 b = 0.95;   % cm
 L = 70.0;   % cm
@@ -189,13 +170,11 @@ p = 2;
 uvals_data = c1*exp(-gamma*xdata) + c2*exp(gamma*xdata) + u_amb;
 uvals_Q_data = c1_Q*exp(-gamma*xdata) + c2_Q*exp(gamma*xdata);
 uvals_h_data = c1_h*exp(-gamma*xdata) + c2_h*exp(gamma*xdata) + gamma_h*xdata.*(-c1*exp(-gamma*xdata) + c2*exp(gamma*xdata));
-
 res = udata - uvals_data;
 
 sens_mat = [uvals_Q_data; uvals_h_data];
 sigma2 = (1/(n-p))*(res*res');
 V = sigma2*inv(sens_mat*sens_mat');
-
 
 clear data model options
 
@@ -330,5 +309,4 @@ function ss = heatss(params,data)
 
   res = udata - uvals_data;
   ss = res'*res;
-
 end

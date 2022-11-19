@@ -1,5 +1,4 @@
 function [Id, UnId] =PSS_SVD(Sens_mat,eta)
-format shortEng
 % p number of parameters.
 [~,p]=size(Sens_mat);
 %Assume all of the parameters are identifiable.
@@ -15,6 +14,5 @@ for k=1:p
        Id(y)=[]; % Since y'th element is not identifiable we remove it from the identifiable element subset
     end         
 end
-format default
 UnId=1:p; %Define the subset for the unidentifiable parameters.
 UnId(Id)=[]; % Remove all parameters that is identifiable from UnId set.

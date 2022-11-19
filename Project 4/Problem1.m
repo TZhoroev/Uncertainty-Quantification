@@ -1,12 +1,10 @@
 clear
 close all
-
 x_data = (58:72)'; % given heights
 n = length(x_data); % number of the data points
 p = 3; % we have three parameters
 Y_data = [115  117 120 123 126 129 132 135 139 142 146  150  154 159 164]'; % given weights
 theta = [261.88 -88.18 11.96]'; % given parameter value
-% V = [634.88  -235.04  21.66;  -235.04  87.09  -8.03; 21.66 -8.03 0.74]; % covariance matrix
 
 X = [ones(n,1) x_data/12 (x_data/12).^2]; % design matrix
 
@@ -20,12 +18,10 @@ mean = X*theta;
 covY = X*V*X' + V_sigma;
 sd_bd = 2*sqrt(diag(covY));
 
-
 x_test = (58:.5:72)';
 Y_test = theta(1)+ theta(2)*(x_test/12) + theta(3)*(x_test/12).^2 ;
 N = length(x_test);
 X_test = [ones(N,1) x_test/12  x_test.^2/144];
-
 
 alpha = 0.05;
 tcrit2 = tinv(1-alpha/2,n-p);
@@ -52,13 +48,10 @@ legend('Mean Response','Data','2\sigma Interval','Prediction Interval','Location
 xlabel('Height (in)')
 ylabel('Weight (lbs)')
 
-
-
 x_test = (50:.5:80)';
 Y_test = theta(1)+ theta(2)*(x_test/12) + theta(3)*(x_test/12).^2 ;
 N = length(x_test);
 X_test = [ones(N,1) x_test/12  x_test.^2/144];
-
 
 alpha = 0.05;
 tcrit2 = tinv(1-alpha/2,n-p);

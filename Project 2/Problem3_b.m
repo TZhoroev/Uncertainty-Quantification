@@ -6,7 +6,6 @@ t_vals = t_data;
 Infected_data= SIR(:,2)';
 Y0=[900;100;0];
 
-
 S0 = 900; R0 = 0; I0 = 100;  N=1000;
 gamma = 9.9929e-03;
 delta = 1.9529e-01;
@@ -19,14 +18,11 @@ gamma_complex = complex(gamma,h);
 params = [gamma_complex  delta r];
 [~,Y] = ode45(@SIR_rhs,t_vals, Y0, ode_options, params);
 S_gamma = imag(Y(:,1))/h; I_gamma = imag(Y(:,2))/h; R_gamma = imag(Y(:,3))/h;
-
-  
+ 
 delta_complex = complex(delta,h);
 params = [gamma delta_complex r];
 [~,Y] = ode45(@SIR_rhs,t_vals,Y0,ode_options,params);
 S_delta = imag(Y(:,1))/h; I_delta = imag(Y(:,2))/h; R_delta = imag(Y(:,3))/h;
-
-
 
 r_complex = complex(r,h);
 params = [gamma delta r_complex];
@@ -54,8 +50,6 @@ set(gca,'Fontsize',20);
 xlabel('Time (days)')
 ylabel('Number of infection')
 legend('Susceptible','Infected','Recovered','Observation','Location','east')
-
-
 
 Residue = Infected_data - I';
 p=3;
@@ -106,21 +100,6 @@ plot(r_s,dist_r,'-k', 'linewidth',4)
 set(gca,'Fontsize',20);
 xlabel('r')
 ylabel('PDF')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function dy = SIR_rhs(~,y,params)
 N = 1000;

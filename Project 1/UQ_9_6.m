@@ -45,11 +45,10 @@ for i=1:3
 end
 % (d)
 
-
 M =1e4;
-%p =  sobolset(3,'Skip',1e4,'Leap',1e1);
-%D = net(p,2*M);
-D = rand(2*M,3);
+p =  sobolset(3,'Skip',1e4,'Leap',1e1);
+D = net(p,2*M);
+% D = rand(2*M,3);
 D(:,1) = D(:,1)*(b1 - a1) + a1;
 D(:,2) = D(:,2)*(b2 - a2) + a2;
 D(:,3) = D(:,3)*(b3 - a3) + a3;
@@ -91,9 +90,3 @@ set(gca,'Fontsize',22);
 xlabel('Energy')
 ylabel('Probability density')
 legend('All random','\alpha_1, \alpha_{11} random','Location','NorthEast')
-
-    
-    
-
-
-

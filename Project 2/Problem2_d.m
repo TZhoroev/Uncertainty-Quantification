@@ -4,9 +4,7 @@ t_data = [0 1 2 3 4 5 6 7 8 9 10 11 12 13];
 Infected_data = [3 8 26 76 225 298 258 233 189 128 68 29 14 4];
 Y0=[760;3;0];
 N=763;
-
 q0 = [1,3];
-
 
 ode_options = odeset('RelTol',1e-12);
 t_vals = 0:0.1:13;%
@@ -29,7 +27,6 @@ ylabel('Number of infection')
 legend('Susceptible','Infected','Recovered','Observation','Location','east')
 
 %------------------------------%
-
 gamma= 0.002218323261879;
 
 r= 0.446928402444749;
@@ -74,12 +71,6 @@ legend('Residue','','2\sigma interval','Location','Northeast')
 
 cov_est = sigma2*eye(2)/(Sens_mat'*Sens_mat); 
 rank(cov_est)
-
-
-
-
-
-
 
 function Error = odeparameterestimation(t_data,Infected_data,q)
 Y0=[760;3;0];

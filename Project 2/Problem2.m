@@ -60,5 +60,3 @@ set(gca,'Fontsize',20);
 xlabel('Polarization')
 ylabel('Helmholtz energy')
 legend('Model','Observation','Location','Northeast')
-
-

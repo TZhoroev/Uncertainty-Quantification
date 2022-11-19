@@ -101,4 +101,3 @@ set(gca,'Fontsize',22);
 xlabel('t-vals')
 ylabel('Response')
 legend('Given Function','Location','Best')
-

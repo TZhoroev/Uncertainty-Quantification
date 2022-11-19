@@ -204,12 +204,6 @@ ylabel(' \sigma^2')
 
 mean(s2chain)
 
-
-
-
-
-
-
 function lse = SS_SIR(params, data)
 t_data = data.xdata;
 Infected_data = data.ydata;
@@ -221,8 +215,6 @@ ode_options = odeset('RelTol',1e-8);
 Error = y(:,2)-Infected_data;
 lse = Error'*Error;
 end
-
-
 
 function dy = SIR_rhs(~,y,params)
 N = 1000;

@@ -39,16 +39,12 @@ N = 10000;
 %%
 % Run DRAM to construct the chains (stored in chain) and measurement
 % variance (stored in s2chain).
-%
 
 [results,chain,s2chain] = mcmcrun(model,data,params,options);
-
-
 
 alpha_1_vals = chain(:,1);
 alpha_11_vals = chain(:,2);
 alpha_111_vals = chain(:,3);
-
 
 [~,density_alpha_1,alpha_1_mesh,~]=kde(alpha_1_vals);
 [~,density_alpha_11,alpha_11_mesh,~]=kde(alpha_11_vals);
@@ -167,9 +163,7 @@ bval = 0.5*(n0*sigma02 + SS_old);
 sigma2 = 1/gamrnd(aval,1/bval);
 accept = 0;
 
-%
 %  Run the Metropolis algorithm for N iterations.
-%
 
 for i = 1:N
 z = randn(p,1); 
@@ -197,16 +191,13 @@ bval = 0.5*(n0*sigma02 + SS_old);
 sigma2 = 1/gamrnd(aval,1/bval);
 end
 
-
 alpha_1_vals1 = Q_MCMC(1,:);
 alpha_11_vals1 = Q_MCMC(2,:);
 alpha_111_vals1 = Q_MCMC(3,:);
 
-
 [~,density1_alpha_1,alpha_1_mesh1,~]=kde(alpha_1_vals1);
 [~,density1_alpha_11,alpha_11_mesh1,~]=kde(alpha_11_vals1);
 [~,density1_alpha_111,alpha_111_mesh1,~]=kde(alpha_111_vals1);
-
 
 figure(13); clf
 plot(alpha_1_vals1,'-','linewidth',2)
@@ -233,7 +224,6 @@ axis([0 N -100 430])
 box on
 xlabel('Chain Iteration')
 ylabel('Parameter \alpha_{111}')
-
 
 figure(16); clf
 hold on
@@ -329,18 +319,3 @@ psi_vals = alpha_1*p_data.^2 + alpha_11*p_data.^4 + alpha_111*p_data.^6;
 res = psi_vals - psi_data;
 lse = res'*res;
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

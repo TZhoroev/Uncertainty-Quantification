@@ -29,13 +29,11 @@ gamma_complex = complex(gamma,h);
 params = [gamma_complex  delta r];
 [~,Y] = ode45(@SIR_rhs,t_vals, Y0, ode_options, params);
 S_gamma = imag(Y(:,1))/h; I_gamma = imag(Y(:,2))/h; R_gamma = imag(Y(:,3))/h;
-
   
 delta_complex = complex(delta,h);
 params = [gamma delta_complex r];
 [~,Y] = ode45(@SIR_rhs,t_vals,Y0,ode_options,params);
 S_delta = imag(Y(:,1))/h; I_delta = imag(Y(:,2))/h; R_delta = imag(Y(:,3))/h;
-
 
 r_complex = complex(r,h);
 params = [gamma delta r_complex];
@@ -73,7 +71,6 @@ set(gca,'FontSize',[20])
 legend('Data',' 2\sigma_Y Interval','2\sigma_f  Interval','Mean Response','Location','NorthEast')
 xlabel('Time')
 ylabel('Infection')
-
 
 function dy = SIR_rhs(~,y,params)
 N = 1000;

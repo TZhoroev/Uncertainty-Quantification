@@ -30,13 +30,10 @@ params = [gamma_complex  delta r  k];
 [~,Y] = ode45(@SIR_rhs,t_vals, Y0, ode_options, params);
 S_gamma = imag(Y(:,1))/h; I_gamma = imag(Y(:,2))/h; R_gamma = imag(Y(:,3))/h;
 
-  
 delta_complex = complex(delta,h);
 params = [gamma delta_complex r k];
 [~,Y] = ode45(@SIR_rhs,t_vals,Y0,ode_options,params);
 S_delta = imag(Y(:,1))/h; I_delta = imag(Y(:,2))/h; R_delta = imag(Y(:,3))/h;
-
-
 
 r_complex = complex(r,h);
 params = [gamma delta r_complex k];
@@ -56,9 +53,6 @@ Sens_mat = [S_gamma S_delta S_r S_k;
 sigma2 = (1/(n-p))*(res*res');
 
 V = sigma2*eye(4) / diag(diag(Sens_mat' * Sens_mat)); %pxp
-
-
-
 
 clear data model options
 
@@ -83,7 +77,6 @@ N = 10000;
 %
 
 [results,chain,s2chain] = mcmcrun(model,data,params,options);
-
 
 
 gamma_vals = chain(:,1);
@@ -212,11 +205,6 @@ title('Measurement Error Variance \sigma^2')
 mean(s2chain)
 
 
-
-
-
-
-
 function lse = SS_SIR(params, data)
 t_data = data.xdata;
 Infected_data = data.ydata;
@@ -230,7 +218,6 @@ lse = Error'*Error;
 end
 
 
-
 function dy = SIR_rhs(~,y,params)
 N = 1000;
 gamma = params(1);  delta = params(2); r = params(3); k = params(4);
@@ -240,5 +227,3 @@ dy = [delta*(N-S)-k*gamma*I*S;
       k*gamma*I*S-(r + delta)*I;
       r*I - delta*R];
 end
-
-

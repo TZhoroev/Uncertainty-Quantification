@@ -3,7 +3,6 @@ close all
 load q_data.txt
 % Create training points and responses along with the test points and their responses
 
-
 xs = q_data; % training points
 Y = @(q) ((6*q.^2 + 3).* sin(6*q-4))';
 ys = Y(xs);
@@ -15,22 +14,17 @@ yp = Y(xp);
 %   Book:   ell_k,  sigma,  sigma_0
 %   MATLAB: sigmaL, sigmaF, sigma 
 %
-
 kparams = [3.5, 10];          % [sigmaL, sigmaF]
-
-%
 % Estimate the hyperparameters using an initial estimate of sigma = eps and compute the expected
 % prediction at xp along with the variance
 %
 
 gprMdl = fitrgp(xs,ys,'KernelFunction','squaredexponential','KernelParameters',kparams,'Sigma',eps);
 [pred,~,yint] = predict(gprMdl,xp);
-
 %
 %  Extract the optimized values of sigma, sigmaL, and sigmaF
 %  Extract the covariance function for plotting
 %
-
 sigmaL = gprMdl.KernelInformation.KernelParameters(1); 
 sigmaF = gprMdl.KernelInformation.KernelParameters(2); 
 sigma  = gprMdl.Sigma; 
@@ -61,7 +55,3 @@ legend('Location','NorthWest')
 set(gca,'Fontsize',22);
 xlabel('Parameter q')
 ylabel('Response')
-
-
-
-

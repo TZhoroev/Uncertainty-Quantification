@@ -22,7 +22,6 @@ I = Y(:,2);
 res = I' - Infected_data; % 1xn
 
 h = 1e-16;
-
 gamma_complex = complex(gamma,h);
 params = [gamma_complex r];
 [~,Y] = ode45(@SIR_rhs,t_vals, Y0, ode_options, params);
@@ -35,8 +34,6 @@ params = [gamma r_complex];
 S_r = imag(Y(:,1))/h; I_r = imag(Y(:,2))/h; R_r = imag(Y(:,3))/h;
 
 
-
-
 Sens_mat = [S_gamma S_r ;
             I_gamma I_r ;
             R_gamma R_r]; % nxp
@@ -44,8 +41,6 @@ Sens_mat = [S_gamma S_r ;
 sigma2 = (1/(n-p))*(res*res');
 
 V = sigma2*eye(p) / (Sens_mat' * Sens_mat); %pxp
-
-
 
 
 clear data model options
@@ -98,7 +93,6 @@ box on
 xlabel('Chain Iteration')
 ylabel('Parameter \gamma')
 
-
 figure(4); clf
 plot(r_vals,'-','linewidth',2)
 set(gca,'Fontsize',22);
@@ -106,8 +100,6 @@ axis([0 N 0.38 0.52])
 box on
 xlabel('Chain Iteration')
 ylabel('Parameter r')
-
-
 
 figure(5); clf
 hold on
@@ -152,11 +144,6 @@ ylabel(' \sigma^2')
 mean(s2chain)
 
 
-
-
-
-
-
 function lse = SS_SIR(params, data)
 t_data = data.xdata;
 Infected_data = data.ydata;
@@ -168,8 +155,6 @@ ode_options = odeset('RelTol',1e-8);
 Error = y(:,2)-Infected_data;
 lse = Error'*Error;
 end
-
-
 
 function dy = SIR_rhs(~,y,params)
 N = 763;

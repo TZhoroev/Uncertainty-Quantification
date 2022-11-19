@@ -10,7 +10,6 @@ f_ls_points = f(q_ls);
 q = 0:.01:2;
 f_axis = f(q);
 
-
 figure(1)
 hold on
 plot(q,f_axis,'-b','linewidth',3)

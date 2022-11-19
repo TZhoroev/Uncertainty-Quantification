@@ -16,7 +16,6 @@ t_vals = t_data;
 params =[gamma delta r];
 n = 51;
 p = 3;
-
 % 
 [~,Y] = ode45(@SIR_rhs,t_data,Y0,ode_options,params);
 I = Y(:,2);
@@ -29,14 +28,11 @@ gamma_complex = complex(gamma,h);
 params = [gamma_complex  delta r];
 [~,Y] = ode45(@SIR_rhs,t_vals, Y0, ode_options, params);
 S_gamma = imag(Y(:,1))/h; I_gamma = imag(Y(:,2))/h; R_gamma = imag(Y(:,3))/h;
-
   
 delta_complex = complex(delta,h);
 params = [gamma delta_complex r];
 [~,Y] = ode45(@SIR_rhs,t_vals,Y0,ode_options,params);
 S_delta = imag(Y(:,1))/h; I_delta = imag(Y(:,2))/h; R_delta = imag(Y(:,3))/h;
-
-
 
 r_complex = complex(r,h);
 params = [gamma delta r_complex];
@@ -60,8 +56,6 @@ dist_delta = normpdf(delta_s, delta,sqrt(V(2,2)));
 r_s = linspace((r - t*sqrt(V(3,3))), (r + t*sqrt(V(3,3))), 1000);
 dist_r = normpdf(r_s, r,sqrt(V(3,3)));
 
-
-
 clear data model options
 
 data.xdata = t_data';
@@ -83,16 +77,11 @@ N = 10000;
 %%
 % Run DRAM to construct the chains (stored in chain) and measurement
 % variance (stored in s2chain).
-%
-
 [results,chain,s2chain] = mcmcrun(model,data,params,options);
-
-
 
 gamma_vals = chain(:,1);
 delta_vals = chain(:,2);
 r_vals = chain(:,3);
-
 
 [~,density_gamma,gamma_mesh,~]=kde(gamma_vals);
 [~,density_delta,delta_mesh,~]=kde(delta_vals);
@@ -130,7 +119,6 @@ axis([0 N 0.75 0.85])
 box on
 xlabel('Chain Iteration')
 ylabel('Parameter r')
-
 
 figure(6); clf
 hold on
@@ -202,7 +190,6 @@ title('Measurement Error Variance \sigma^2')
 xlabel('Chain Iteration')
 ylabel(' \sigma^2')
 
-
 out = mcmcpred(results,chain,s2chain,t_data',@SIR_I,2000); % data must by column maytrix
 figure(13)
 mcmcpredplot(out);
@@ -210,9 +197,6 @@ hold on
 set(gca,'Fontsize',24);
 plot(t_data, Infected_data, '*r', 'linewidth',3)
 hold off
-
-
-
 
 function lse = SS_SIR(params, data)
 t_data = data.xdata;
@@ -227,21 +211,21 @@ lse = Error'*Error;
 end
 
 function I = SIR_I(data, params)
-t_data = data;
-Y0 = [900; 100; 0];
-N = 1000;
-gamma = params(1);  delta = params(2); r = params(3);
-ode_options = odeset('RelTol',1e-8);
-[~,y] = ode45(@(t,y) [delta*(N-y(1))-gamma*y(2)*y(1); gamma*y(2)*y(1)-(r + delta)*y(2); r*y(2) - delta*y(3)], t_data, Y0,ode_options);
-I = y(:,2);
+      t_data = data;
+      Y0 = [900; 100; 0];
+      N = 1000;
+      gamma = params(1);  delta = params(2); r = params(3);
+      ode_options = odeset('RelTol',1e-8);
+      [~,y] = ode45(@(t,y) [delta*(N-y(1))-gamma*y(2)*y(1); gamma*y(2)*y(1)-(r + delta)*y(2); r*y(2) - delta*y(3)], t_data, Y0,ode_options);
+      I = y(:,2);
 end
 
 function dy = SIR_rhs(~,y,params)
-N = 1000;
-gamma = params(1);  delta = params(2); r = params(3);
-S = y(1);          I = y(2);           R = y(3);
+      N = 1000;
+      gamma = params(1);  delta = params(2); r = params(3);
+      S = y(1);          I = y(2);           R = y(3);
 
-dy = [delta*(N-S)-gamma*I*S;
-      gamma*I*S-(r + delta)*I;
-      r*I - delta*R];
+      dy = [delta*(N-S)-gamma*I*S;
+            gamma*I*S-(r + delta)*I;
+            r*I - delta*R];
 end

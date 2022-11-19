@@ -3,13 +3,15 @@ close all
 
 tf = 5;
 dt = 0.1;
-t_vals = 0:dt:tf;
+t_vals = 0:dt:tf; % Given time interval
+% Given initial values for system of ODE and sensitivity equations.
 S0 = 900; R0 = 0; I0 = 100;  N=1000;
 S_gamma0 = 0; I_gamma0 = 0; R_gamma0 = 0;
 S_k0 = 0; I_k0 = 0; R_k0 = 0;
 S_delta0 = 0; I_delta0 = 0; R_delta0 = 0;
 S_r0 = 0; I_r0 = 0; R_r0 = 0;
 
+% given parameter values of the ODE system
 gamma = 0.2; k = 0.1; delta = 0.15; r = 0.6;
 params=[gamma k delta r];
 Y0 = [S0; I0; R0; S_gamma0; I_gamma0; R_gamma0; S_k0; I_k0; R_k0; S_delta0; I_delta0; R_delta0;  S_r0; I_r0; R_r0];
@@ -24,34 +26,31 @@ S_k_sen = Y(:,7);       I_k_sen = Y(:,8);            R_k_sen = Y(:,9);
 S_delta_sen = Y(:,10);  I_delta_sen = Y(:,11);       R_delta_sen = Y(:,12);
 S_r_sen = Y(:,13);      I_r_sen = Y(:,14);           R_r_sen = Y(:,15);
 % Compute the sensitivities using complex-step derivative approximations.  This
-% requires p=4 solutions of the ODE system. 
+% requires p = 4 solutions of the ODE system. 
 clear Y0
 h = 1e-16;
 Y0 = [S0; I0; R0];
 
+% Complex step approximation for each parameter.
 gamma_complex = complex(gamma,h);
 params = [gamma_complex k delta r];
-[~,Y] = ode45(@SIR_rhs,t_vals, Y0, ode_options, params);
+[~, Y] = ode45(@SIR_rhs,t_vals, Y0, ode_options, params);
 S_gamma = imag(Y(:,1))/h; I_gamma = imag(Y(:,2))/h; R_gamma = imag(Y(:,3))/h;
-
 
 k_complex = complex(k,h);
 params = [gamma k_complex delta r];
-[~,Y] = ode45(@SIR_rhs,t_vals,Y0,ode_options,params);
+[~, Y] = ode45(@SIR_rhs,t_vals,Y0,ode_options,params);
 S_k = imag(Y(:,1))/h; I_k = imag(Y(:,2))/h; R_k = imag(Y(:,3))/h;
   
 delta_complex = complex(delta,h);
 params = [gamma k delta_complex r];
-[~,Y] = ode45(@SIR_rhs,t_vals,Y0,ode_options,params);
+[~, Y] = ode45(@SIR_rhs,t_vals,Y0,ode_options,params);
 S_delta = imag(Y(:,1))/h; I_delta = imag(Y(:,2))/h; R_delta = imag(Y(:,3))/h;
-
-
 
 r_complex = complex(r,h);
 params = [gamma k delta r_complex];
-[t,Y] = ode45(@SIR_rhs, t_vals,Y0,ode_options,params);
+[t, Y] = ode45(@SIR_rhs, t_vals,Y0,ode_options,params);
 S_r = imag(Y(:,1))/h; I_r = imag(Y(:,2))/h; R_r = imag(Y(:,3))/h;
-
 
 figure(4)
 plot(t,S_gamma_sen','-b',t,S_gamma,'--r','linewidth',3)
@@ -187,7 +186,6 @@ end
 
 
 function [Id, UnId] = PSS_eig(Sens_mat, eta)
-
 % p number of parameters.
 [~,p]=size(Sens_mat);
 %Assume all of the parameters are identifiable.
@@ -204,8 +202,6 @@ for k=1:p
        Id(y)=[]; % Since y'th element is not identifiable we remove it from the identifiable element subset
     end         
 end
-
 UnId=1:p; %Define the subset for the unidentifiable parameters.
 UnId(Id)=[]; % Remove all parameters that is identifiable from UnId set.
 end
-

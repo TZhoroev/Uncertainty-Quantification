@@ -43,5 +43,4 @@ S = y(1);          I = y(2);           R = y(3);
 dy = [delta*(N-S)-gamma*I*S;
       gamma*I*S-(r + delta)*I;
       r*I - delta*R];
-end
-
+enn

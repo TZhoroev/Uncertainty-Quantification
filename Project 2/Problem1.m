@@ -1,50 +1,23 @@
-%%
-%                       heat_code.m
-%
-%
-% Code computes optimal parameters, the sensitivity matrices, and covariance matrix for the aluminum
-% rod data analyzied in Example 11.22. 
-%
-% Required functions: heat_fun_al.m
-% Required data: final_al_data.txt
-%
-
   clear 
   close all
-
   global data_cop xdata
-  
-
-
-
- 
-
   data_cop =[66.04 60.04 54.81 50.42 46.74 43.66 40.76 38.49 36.42 34.77 33.18 32.36 31.56 30.91 30.56];
   xdata = [10 14 18 22 26 30 34 38 42 46 50 54 58 62 66];
   xvals = 10:.1:70;
   u_amb = 22.28;
-
-%
 % Input dimensions and material constants for the alumunim rod. 
-%
-
   a = 0.95;      % cm
   b = 0.95;      % cm
   L = 70.0;      % cm
   k = 4.01;      % W/cm C
   n = 15;        % Number of measurements
   p = 2;         % Number of parameters
-  
-%%
 % Optimize parameters and construct increments used when approximating sensitivities using
 % finite differences.  The representations are truncated to two significant digits to remain
 % consistent with the measured temperatures. 
-%
-
   h_init = 0.00183;
   Q_init = -15.93;
   q_init = [h_init Q_init];
-  
   modelfun = @(q)heat_fun_al(q,a,b,L,k,u_amb);
   [q_opt,fval] = fminsearch(modelfun,q_init);
 
@@ -153,12 +126,7 @@
 
   tval = 2.1604;
   int_Q = [Q - sqrt(V(1,1))*tval  Q + sqrt(V(1,1))*tval];
-  int_h = [h - sqrt(V(2,2))*tval  h + sqrt(V(2,2))*tval];
-
-%
-% Plot the sensitivities obtained analytically and using finite differences
-% to show that to within visual accuracy, they are the same.
-%
+  int_h = [h - sqrt(V(2,2))*tval  h + sqrt(V(2,2))*tval];s
  
   figure(3)
   plot(xdata,uvals_Q_data,'o',xdata,Q_fd,'x','linewidth',6) 
@@ -186,23 +154,15 @@
 
 
   function J = heat_fun_al(q,a,b,L,k_al,u_amb_cop)
-
   global data_cop xdata
-
   h = q(1);
   Q = q(2);
-
-%
-%  Construct constants and solution
-%
-
   gamma_al = sqrt(2*(a+b)*h/(a*b*k_al));
   f1_al = exp(gamma_al*L)*(h + k_al*gamma_al);
   f2_al = exp(-gamma_al*L)*(h - k_al*gamma_al);
   f3_al = f1_al/(f2_al + f1_al);
   c1_al = -Q*f3_al/(k_al*gamma_al);
   c2_al = Q/(k_al*gamma_al) + c1_al;
-
   uvals_al = c1_al*exp(-gamma_al*xdata) + c2_al*exp(gamma_al*xdata) + u_amb_cop;
   res_al = data_cop - uvals_al;
   J = res_al*res_al';
