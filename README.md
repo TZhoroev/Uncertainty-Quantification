@@ -1,6 +1,7 @@
 # Uncertainty-Quantification
 
 My solutions for MA 540: Uncertainty Quantification offered by NCSU.
+![Plot](https://repository-images.githubusercontent.com/567346313/f0d5da77-3242-42a3-8700-8bb535fee935)
 
 This topics covers the following topics:
   * Determine the sources and impacts of input and response uncertainties in models arising in their discipline as well as prototypical weather, climate, hydrology, nuclear and biology models.
@@ -72,14 +73,16 @@ This topics covers the following topics:
    - Stochastic Galerkin Methods: Projection methods, the algorithms are available in Sandia Dakota package for high dimensional models.
    - Statistical Surrogate Models: Gaussian process or Kriging representations, Neural Networks.
  
- 1. [Problem 1: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%205/Problem1.m)
- 2. [Problem 2: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%205/Problem2.m)
- 3. [Problem 3: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%205/Problem3.m)
+ 1. [Problem 1: Find the 8th - order polynomial surrogate model using random sampling and Latin hypercube samplings. Discuss the limitations on extrapolation domains. ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%205/Problem1.m)
+ 2. [Problem 2: Find the Legendre surrogate model using Discrete projection and Monte Carlo methods. ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%205/Problem2.m)
+ 3. [Problem 3: Find the Gaussian surraget model of given dataset.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%205/Problem3.m)
   * *[Project Writeup](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%205/Project_5_writeup.pdf)*
   
-     [Project 6](https://github.com/TZhoroev/Uncertainty-Quantification/tree/main/Project%206):
+ [Project 6](https://github.com/TZhoroev/Uncertainty-Quantification/tree/main/Project%206):
  
- 1. [Problem 1: ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%206/Final.m)
+  - Quantification of the physical and surrogate model discrepancies
+ 
+ 1. [Problem 1: Explore the Dittus-Boelter equation](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%206/Final.m)
   * *[Project Writeup](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%206/Project_6_writeup.pdf)*
   
   
