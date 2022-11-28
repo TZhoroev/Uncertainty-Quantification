@@ -51,7 +51,7 @@ hold on
 h(2) = plot(xs,ys,'ro','linewidth',5,'DisplayName','Data');
 h(3) = plot(xp,pred,'b-','linewidth',3,'DisplayName','Predictive Mean');
 hold off
-legend('Location','NorthWest')
+legend('Data','Prediction Mean', '95% Prediction Interval', 'Location','best')
 set(gca,'Fontsize',22);
 xlabel('Parameter q')
 ylabel('Response')
