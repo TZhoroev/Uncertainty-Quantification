@@ -1,7 +1,7 @@
 # Uncertainty-Quantification
 
 My solutions for MA 540: Uncertainty Quantification offered by NCSU.
-![Plot](https://repository-images.githubusercontent.com/567346313/f0d5da77-3242-42a3-8700-8bb535fee935)
+![Plot](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/UQ.png)
 
 This topics covers the following topics:
   * Determine the sources and impacts of input and response uncertainties in models arising in their discipline as well as prototypical weather, climate, hydrology, nuclear and biology models.
