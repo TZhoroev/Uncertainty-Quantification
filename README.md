@@ -11,6 +11,9 @@ This topics covers the following topics:
   * Compute confidence intervals using frequentist analysis and employ Markov chain Monte Carlo methods to construct posterior distributions and credible intervals for parameters. Be able to verify the accuracy of distributions constructed using Bayesian analysis.
   * Compute confidence, credible and prediction intervals for model responses and quantities of interest using sampling techniques and numerical stochastic spectral methods.
   
+  - ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) Required Toolboxes: [Optimization Toolbox](https://www.mathworks.com/products/optimization.html) and [Global Optimization Toolbox](https://www.mathworks.com/products/global-optimization.html)
+  - ![#c5f015](https://placehold.co/15x15/c5f015/c5f015.png) Required Package: [MCMC for MATLAB](https://mjlaine.github.io/mcmcstat/)
+  
  [Project 1](https://github.com/TZhoroev/Uncertainty-Quantification/tree/main/Project%201): 
  
   - Learned the various methods, including analytical, finite difference, and complex-step approximations, to compute the sensitivity equations of the models with respect to each parameter of the model. 
