@@ -1,6 +1,5 @@
 # Uncertainty-Quantification
 
-My solutions for MA 540: Uncertainty Quantification offered by NCSU.
 ![Plot](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/UQ.png)
 
 This topics covers the following topics:
