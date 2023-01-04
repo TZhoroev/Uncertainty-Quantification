@@ -2,7 +2,7 @@
 
 ![Plot](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/UQ.png)
 
-This course covers the following topics:
+This course covers the following topics :
   * Determine the sources and impacts of input and response uncertainties in models arising in their discipline as well as prototypical weather, climate, hydrology, nuclear and biology models.
   * Explain the basic probability, stochastic process and statistics concepts required for uncertainty quantification.
   * Formulate models in a manner that isolates the influential parameters and facilitates statistical analysis. This includes the use of local and global sensitivity analysis techniques.
