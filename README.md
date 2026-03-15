@@ -96,8 +96,8 @@ Required packages: `numpy`, `scipy`, `matplotlib`, `statsmodels`
 | Problem | Description | MATLAB | Python |
 |---------|-------------|--------|--------|
 | 1 | Posterior comparison for heat equation | [Problem1.m](Project%203/Problem1.m) | [Problem1.py](Project%203/Problem1.py) |
-| 2 | Optimization vs Bayesian estimation | [Problem2.m](Project%203/Problem2.m) | - |
-| 3 | MCMC for Helmholtz model | [Problem3.m](Project%203/Problem3.m) | - |
+| 2 | DRAM vs Metropolis for SIR model | [Problem2.m](Project%203/Problem2.m) | [Problem2.py](Project%203/Problem2.py) |
+| 3 | MCMC for Helmholtz model | [Problem3.m](Project%203/Problem3.m) | [Problem3.py](Project%203/Problem3.py) |
 
 [Project Writeup (PDF)](Project%203/Project_3_writeup.pdf)
 
@@ -110,9 +110,9 @@ Required packages: `numpy`, `scipy`, `matplotlib`, `statsmodels`
 | Problem | Description | MATLAB | Python |
 |---------|-------------|--------|--------|
 | 1 | Frequentist intervals for height-weight model | [Problem1.m](Project%204/Problem1.m) | [Problem1.py](Project%204/Problem1.py) |
-| 2 | Bayesian intervals for aluminum rod | [Problem2.m](Project%204/Problem2.m) | - |
-| 3 | SIR model credible intervals | [Problem3a.m](Project%204/Problem3a.m) | - |
-| 4 | Frequentist vs Bayesian comparison | [Problem4.m](Project%204/Problem4.m) | - |
+| 2 | Bayesian intervals for aluminum rod | [Problem2.m](Project%204/Problem2.m) | [Problem2.py](Project%204/Problem2.py) |
+| 3 | SIR model credible intervals | [Problem3a.m](Project%204/Problem3a.m) | [Problem3.py](Project%204/Problem3.py) |
+| 4 | Frequentist vs Bayesian comparison | [Problem4.m](Project%204/Problem4.m) | [Problem4.py](Project%204/Problem4.py) |
 
 [Project Writeup (PDF)](Project%204/Project_4_writeup.pdf)
 
@@ -125,7 +125,7 @@ Required packages: `numpy`, `scipy`, `matplotlib`, `statsmodels`
 | Problem | Description | MATLAB | Python |
 |---------|-------------|--------|--------|
 | 1 | Polynomial surrogate with LHS | [Problem1.m](Project%205/Problem1.m) | [Problem1.py](Project%205/Problem1.py) |
-| 2 | Legendre surrogate model | [Problem2.m](Project%205/Problem2.m) | - |
+| 2 | Legendre surrogate model | [Problem2.m](Project%205/Problem2.m) | [Problem2.py](Project%205/Problem2.py) |
 | 3 | Gaussian process regression | [Problem3.m](Project%205/Problem3.m) | [Problem3.py](Project%205/Problem3.py) |
 
 [Project Writeup (PDF)](Project%205/Project_5_writeup.pdf)
@@ -138,7 +138,7 @@ Required packages: `numpy`, `scipy`, `matplotlib`, `statsmodels`
 
 | Problem | Description | MATLAB | Python |
 |---------|-------------|--------|--------|
-| 1 | Dittus-Boelter equation analysis | [Final.m](Project%206/Final.m) | - |
+| 1 | Dittus-Boelter equation analysis | [Final.m](Project%206/Final.m) | [Final.py](Project%206/Final.py) |
 
 [Project Writeup (PDF)](Project%206/Project_6_writeup.pdf)
 

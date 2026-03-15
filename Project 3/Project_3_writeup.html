@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+
+html {
+color: #1a1a1a;
+background-color: #fdfdfd;
+}
+body {
+margin: 0 auto;
+max-width: 36em;
+padding-left: 50px;
+padding-right: 50px;
+padding-top: 50px;
+padding-bottom: 50px;
+hyphens: auto;
+overflow-wrap: break-word;
+text-rendering: optimizeLegibility;
+font-kerning: normal;
+}
+@media (max-width: 600px) {
+body {
+font-size: 0.9em;
+padding: 12px;
+}
+h1 {
+font-size: 1.8em;
+}
+}
+@media print {
+html {
+background-color: white;
+}
+body {
+background-color: transparent;
+color: black;
+font-size: 12pt;
+}
+p, h2, h3 {
+orphans: 3;
+widows: 3;
+}
+h2, h3, h4 {
+page-break-after: avoid;
+}
+}
+p {
+margin: 1em 0;
+}
+a {
+color: #1a1a1a;
+}
+a:visited {
+color: #1a1a1a;
+}
+img {
+max-width: 100%;
+}
+svg {
+height: auto;
+max-width: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+margin-top: 1.4em;
+}
+h5, h6 {
+font-size: 1em;
+font-style: italic;
+}
+h6 {
+font-weight: normal;
+}
+ol, ul {
+padding-left: 1.7em;
+margin-top: 1em;
+}
+li > ol, li > ul {
+margin-top: 0;
+}
+blockquote {
+margin: 1em 0 1em 1.7em;
+padding-left: 1em;
+border-left: 2px solid #e6e6e6;
+color: #606060;
+}
+code {
+font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+font-size: 85%;
+margin: 0;
+hyphens: manual;
+}
+pre {
+margin: 1em 0;
+overflow: auto;
+}
+pre code {
+padding: 0;
+overflow: visible;
+overflow-wrap: normal;
+}
+.sourceCode {
+background-color: transparent;
+overflow: visible;
+}
+hr {
+border: none;
+border-top: 1px solid #1a1a1a;
+height: 1px;
+margin: 1em 0;
+}
+table {
+margin: 1em 0;
+border-collapse: collapse;
+width: 100%;
+overflow-x: auto;
+display: block;
+font-variant-numeric: lining-nums tabular-nums;
+}
+table caption {
+margin-bottom: 0.75em;
+}
+tbody {
+margin-top: 0.5em;
+border-top: 1px solid #1a1a1a;
+border-bottom: 1px solid #1a1a1a;
+}
+th {
+border-top: 1px solid #1a1a1a;
+padding: 0.25em 0.5em 0.25em 0.5em;
+}
+td {
+padding: 0.125em 0.5em 0.25em 0.5em;
+}
+header {
+margin-bottom: 4em;
+text-align: center;
+}
+#TOC li {
+list-style: none;
+}
+#TOC ul {
+padding-left: 1.3em;
+}
+#TOC > ul {
+padding-left: 0;
+}
+#TOC a:not(:hover) {
+text-decoration: none;
+}
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+</head>
+<body>
+<h1 id="project-3-bayesian-inference-and-mcmc">Project 3: Bayesian
+Inference and MCMC</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Bayesian inference provides a principled framework for combining
+prior knowledge with observed data to obtain posterior distributions for
+model parameters. Unlike point estimates from optimization, Bayesian
+methods quantify the full uncertainty in parameter values.</p>
+<p>This project implements Markov Chain Monte Carlo (MCMC) algorithms to
+sample from posterior distributions and compares different sampling
+strategies.</p>
+<h2 id="bayesian-framework">Bayesian Framework</h2>
+<h3 id="bayes-theorem">Bayes’ Theorem</h3>
+<p>The posterior distribution is given by:</p>
+<pre><code>p(theta | y) = p(y | theta) * p(theta) / p(y)</code></pre>
+<p>where: - p(theta | y) is the posterior (what we want) - p(y | theta)
+is the likelihood (data model) - p(theta) is the prior (our beliefs
+before seeing data) - p(y) is the evidence (normalizing constant)</p>
+<h3 id="likelihood-for-regression">Likelihood for Regression</h3>
+<p>For data y with additive Gaussian noise:</p>
+<pre><code>y = f(x; theta) + epsilon,  epsilon ~ N(0, sigma^2)</code></pre>
+<p>The likelihood is:</p>
+<pre><code>p(y | theta, sigma^2) = (2*pi*sigma^2)^(-n/2) * exp(-RSS / (2*sigma^2))</code></pre>
+<p>where RSS is the residual sum of squares.</p>
+<h2 id="problem-1-heat-equation-posterior-comparison">Problem 1: Heat
+Equation Posterior Comparison</h2>
+<h3 id="background">Background</h3>
+<p>We revisit the heat conduction problem and compare: - OLS estimates
+with normal approximation - Full Bayesian posterior via MCMC</p>
+<h3 id="mcmc-implementation">MCMC Implementation</h3>
+<p>We implement two algorithms:</p>
+<p><strong>Metropolis-Hastings</strong>: Standard random walk sampler
+with fixed proposal covariance.</p>
+<p><strong>Adaptive Metropolis</strong>: The proposal covariance is
+updated based on the chain history to achieve better mixing.</p>
+<h3 id="algorithm-metropolis-hastings">Algorithm:
+Metropolis-Hastings</h3>
+<pre><code>1. Initialize theta_0
+2. For i = 1 to N:
+   a. Propose theta* ~ N(theta_{i-1}, C)
+   b. Compute acceptance ratio:
+      alpha = min(1, p(y|theta*)*p(theta*) / p(y|theta_{i-1})*p(theta_{i-1}))
+   c. Accept with probability alpha:
+      theta_i = theta* if u &lt; alpha, else theta_i = theta_{i-1}</code></pre>
+<h3 id="results">Results</h3>
+<p>The chain traces show convergence after a burn-in period:</p>
+<figure>
+<img role="img" aria-label="Chain Traces Problem 1" src="Figures&amp;Data/1_1.jpg" alt="Chain Traces Problem 1" />
+<figcaption aria-hidden="true">Chain Traces Problem 1</figcaption>
+</figure>
+<figure>
+<img role="img" aria-label="Parameter Densities" src="Figures&amp;Data/1_2.jpg" alt="Parameter Densities" />
+<figcaption aria-hidden="true">Parameter Densities</figcaption>
+</figure>
+<p>The posterior densities are compared with the normal approximation
+from OLS:</p>
+<figure>
+<img role="img" aria-label="Posterior Comparison" src="Figures&amp;Data/1_3.jpg" alt="Posterior Comparison" />
+<figcaption aria-hidden="true">Posterior Comparison</figcaption>
+</figure>
+<p>For well-behaved problems with sufficient data, the normal
+approximation is accurate. For small samples or complex posteriors, the
+full MCMC approach is necessary.</p>
+<h2 id="problem-2-sir-model-mcmc">Problem 2: SIR Model MCMC</h2>
+<h3 id="background-1">Background</h3>
+<p>We apply MCMC to the SIR epidemic model to obtain posterior
+distributions for infection parameters.</p>
+<h3 id="dram-algorithm">DRAM Algorithm</h3>
+<p>The Delayed Rejection Adaptive Metropolis (DRAM) algorithm combines:
+- Adaptive proposal updates for better mixing - Delayed rejection to
+improve acceptance in difficult regions</p>
+<h3 id="results-1">Results</h3>
+<figure>
+<img role="img" aria-label="SIR Chain Traces" src="Figures&amp;Data/2_1.jpg" alt="SIR Chain Traces" />
+<figcaption aria-hidden="true">SIR Chain Traces</figcaption>
+</figure>
+<p>The chains show good mixing after adaptation.</p>
+<figure>
+<img role="img" aria-label="SIR Parameter Pairs" src="Figures&amp;Data/2_2.jpg" alt="SIR Parameter Pairs" />
+<figcaption aria-hidden="true">SIR Parameter Pairs</figcaption>
+</figure>
+<p>The pairwise scatter plots reveal correlations between
+parameters.</p>
+<figure>
+<img role="img" aria-label="SIR Marginal Densities" src="Figures&amp;Data/2_3.jpg" alt="SIR Marginal Densities" />
+<figcaption aria-hidden="true">SIR Marginal Densities</figcaption>
+</figure>
+<p>Comparison with OLS normal approximation:</p>
+<figure>
+<img role="img" aria-label="OLS vs MCMC" src="Figures&amp;Data/2_4.jpg" alt="OLS vs MCMC" />
+<figcaption aria-hidden="true">OLS vs MCMC</figcaption>
+</figure>
+<figure>
+<img role="img" aria-label="Measurement Variance" src="Figures&amp;Data/2_10.jpg" alt="Measurement Variance" />
+<figcaption aria-hidden="true">Measurement Variance</figcaption>
+</figure>
+<h2 id="problem-3-helmholtz-model-mcmc">Problem 3: Helmholtz Model
+MCMC</h2>
+<h3 id="background-2">Background</h3>
+<p>We compare standard Metropolis-Hastings with DRAM for the Helmholtz
+energy model.</p>
+<h3 id="comparison-of-algorithms">Comparison of Algorithms</h3>
+<p>The standard Metropolis algorithm with fixed proposal may have poor
+acceptance rates if the proposal is not well-tuned. DRAM adapts
+automatically.</p>
+<h3 id="results-2">Results</h3>
+<p><strong>DRAM Results:</strong></p>
+<figure>
+<img role="img" aria-label="Helmholtz DRAM Chains" src="Figures&amp;Data/3_1.jpg" alt="Helmholtz DRAM Chains" />
+<figcaption aria-hidden="true">Helmholtz DRAM Chains</figcaption>
+</figure>
+<figure>
+<img role="img" aria-label="Helmholtz DRAM Densities" src="Figures&amp;Data/3_2.jpg" alt="Helmholtz DRAM Densities" />
+<figcaption aria-hidden="true">Helmholtz DRAM Densities</figcaption>
+</figure>
+<p><strong>Standard Metropolis Results:</strong></p>
+<figure>
+<img role="img" aria-label="Helmholtz MH Chains" src="Figures&amp;Data/3_13.jpg" alt="Helmholtz MH Chains" />
+<figcaption aria-hidden="true">Helmholtz MH Chains</figcaption>
+</figure>
+<p><strong>Comparison:</strong></p>
+<figure>
+<img role="img" aria-label="Algorithm Comparison" src="Figures&amp;Data/3_16.jpg" alt="Algorithm Comparison" />
+<figcaption aria-hidden="true">Algorithm Comparison</figcaption>
+</figure>
+<p>Both algorithms converge to the same posterior, but DRAM achieves
+better mixing with less tuning.</p>
+<h2 id="convergence-diagnostics">Convergence Diagnostics</h2>
+<p>Proper MCMC requires checking for convergence:</p>
+<ol type="1">
+<li><strong>Visual inspection</strong>: Chains should look like white
+noise after burn-in</li>
+<li><strong>Acceptance rate</strong>: Optimal around 23-44% for
+multivariate targets</li>
+<li><strong>Autocorrelation</strong>: Low autocorrelation indicates good
+mixing</li>
+<li><strong>Effective sample size</strong>: Should be large enough for
+reliable inference</li>
+</ol>
+<h2 id="summary">Summary</h2>
+<p>Key takeaways from this project:</p>
+<ol type="1">
+<li><p>MCMC provides full posterior distributions, not just point
+estimates.</p></li>
+<li><p>The Metropolis-Hastings algorithm is simple but requires tuning
+the proposal.</p></li>
+<li><p>Adaptive methods like DRAM automatically tune the proposal for
+better efficiency.</p></li>
+<li><p>For simple problems with sufficient data, the normal
+approximation from OLS is often adequate.</p></li>
+<li><p>Convergence diagnostics are essential to ensure reliable
+results.</p></li>
+</ol>
+<h2 id="code-files">Code Files</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Problem1.m / Problem1.py</td>
+<td>Heat equation MCMC</td>
+</tr>
+<tr>
+<td>Problem2.m / Problem2.py</td>
+<td>SIR model DRAM</td>
+</tr>
+<tr>
+<td>Problem3.m / Problem3.py</td>
+<td>Helmholtz MCMC comparison</td>
+</tr>
+</tbody>
+</table>
+<h2 id="references">References</h2>
+<ol type="1">
+<li>Haario, H. et al. (2006). DRAM: Efficient adaptive MCMC. Statistics
+and Computing.</li>
+<li>Gelman, A. et al. (2013). Bayesian Data Analysis, 3rd Edition. CRC
+Press.</li>
+</ol>
+</body>
+</html>

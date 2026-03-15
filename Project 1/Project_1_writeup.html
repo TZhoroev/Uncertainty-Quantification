@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+
+html {
+color: #1a1a1a;
+background-color: #fdfdfd;
+}
+body {
+margin: 0 auto;
+max-width: 36em;
+padding-left: 50px;
+padding-right: 50px;
+padding-top: 50px;
+padding-bottom: 50px;
+hyphens: auto;
+overflow-wrap: break-word;
+text-rendering: optimizeLegibility;
+font-kerning: normal;
+}
+@media (max-width: 600px) {
+body {
+font-size: 0.9em;
+padding: 12px;
+}
+h1 {
+font-size: 1.8em;
+}
+}
+@media print {
+html {
+background-color: white;
+}
+body {
+background-color: transparent;
+color: black;
+font-size: 12pt;
+}
+p, h2, h3 {
+orphans: 3;
+widows: 3;
+}
+h2, h3, h4 {
+page-break-after: avoid;
+}
+}
+p {
+margin: 1em 0;
+}
+a {
+color: #1a1a1a;
+}
+a:visited {
+color: #1a1a1a;
+}
+img {
+max-width: 100%;
+}
+svg {
+height: auto;
+max-width: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+margin-top: 1.4em;
+}
+h5, h6 {
+font-size: 1em;
+font-style: italic;
+}
+h6 {
+font-weight: normal;
+}
+ol, ul {
+padding-left: 1.7em;
+margin-top: 1em;
+}
+li > ol, li > ul {
+margin-top: 0;
+}
+blockquote {
+margin: 1em 0 1em 1.7em;
+padding-left: 1em;
+border-left: 2px solid #e6e6e6;
+color: #606060;
+}
+code {
+font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+font-size: 85%;
+margin: 0;
+hyphens: manual;
+}
+pre {
+margin: 1em 0;
+overflow: auto;
+}
+pre code {
+padding: 0;
+overflow: visible;
+overflow-wrap: normal;
+}
+.sourceCode {
+background-color: transparent;
+overflow: visible;
+}
+hr {
+border: none;
+border-top: 1px solid #1a1a1a;
+height: 1px;
+margin: 1em 0;
+}
+table {
+margin: 1em 0;
+border-collapse: collapse;
+width: 100%;
+overflow-x: auto;
+display: block;
+font-variant-numeric: lining-nums tabular-nums;
+}
+table caption {
+margin-bottom: 0.75em;
+}
+tbody {
+margin-top: 0.5em;
+border-top: 1px solid #1a1a1a;
+border-bottom: 1px solid #1a1a1a;
+}
+th {
+border-top: 1px solid #1a1a1a;
+padding: 0.25em 0.5em 0.25em 0.5em;
+}
+td {
+padding: 0.125em 0.5em 0.25em 0.5em;
+}
+header {
+margin-bottom: 4em;
+text-align: center;
+}
+#TOC li {
+list-style: none;
+}
+#TOC ul {
+padding-left: 1.3em;
+}
+#TOC > ul {
+padding-left: 0;
+}
+#TOC a:not(:hover) {
+text-decoration: none;
+}
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+</head>
+<body>
+<h1 id="project-1-sensitivity-analysis">Project 1: Sensitivity
+Analysis</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Sensitivity analysis is a fundamental tool in uncertainty
+quantification that helps us understand how changes in model parameters
+affect model outputs. This project explores both local and global
+sensitivity analysis methods applied to physical and biological
+systems.</p>
+<p>Local sensitivity analysis examines the effect of small perturbations
+around a nominal parameter value. Global sensitivity analysis, in
+contrast, explores the entire parameter space to understand how
+uncertainty in inputs propagates to outputs.</p>
+<h2 id="problem-1-spring-model-sensitivities">Problem 1: Spring Model
+Sensitivities</h2>
+<h3 id="background">Background</h3>
+<p>We consider a simple spring model where the displacement depends on
+physical parameters. The goal is to compute the sensitivity of the
+displacement with respect to model parameters using three
+approaches:</p>
+<ol type="1">
+<li>Finite difference approximation</li>
+<li>Complex step derivative approximation<br />
+</li>
+<li>Analytical derivatives</li>
+</ol>
+<h3 id="mathematical-formulation">Mathematical Formulation</h3>
+<p>For a function f(q), the finite difference approximation of the
+derivative is:</p>
+<pre><code>df/dq ≈ [f(q + h) - f(q)] / h</code></pre>
+<p>The complex step method uses:</p>
+<pre><code>df/dq ≈ Im[f(q + ih)] / h</code></pre>
+<p>where i is the imaginary unit. This method achieves machine precision
+accuracy without subtractive cancellation errors.</p>
+<h3 id="results">Results</h3>
+<p>The figure below shows the comparison of all three methods:</p>
+<figure>
+<img role="img" aria-label="Spring Model Sensitivities" src="Figures/8_5_1.jpg" alt="Spring Model Sensitivities" />
+<figcaption aria-hidden="true">Spring Model Sensitivities</figcaption>
+</figure>
+<p>The complex step method matches the analytical solution to machine
+precision, while finite differences show truncation errors for small
+step sizes and round-off errors for very small step sizes.</p>
+<figure>
+<img role="img" aria-label="Convergence Analysis" src="Figures/8_5_2.jpg" alt="Convergence Analysis" />
+<figcaption aria-hidden="true">Convergence Analysis</figcaption>
+</figure>
+<h2 id="problem-2-sir-model-sensitivities-and-identifiability">Problem
+2: SIR Model Sensitivities and Identifiability</h2>
+<h3 id="background-1">Background</h3>
+<p>The SIR (Susceptible-Infected-Recovered) model describes the spread
+of infectious diseases. The model equations are:</p>
+<pre><code>dS/dt = delta*(N - S) - gamma*I*S
+dI/dt = gamma*I*S - (r + delta)*I  
+dR/dt = r*I - delta*R</code></pre>
+<p>where: - S, I, R are susceptible, infected, and recovered populations
+- gamma is the infection rate - delta is the birth/death rate - r is the
+recovery rate - N is the total population</p>
+<h3 id="sensitivity-analysis">Sensitivity Analysis</h3>
+<p>We compute sensitivities of the infected population with respect to
+each parameter using the complex step method. The sensitivity equations
+are solved alongside the state equations.</p>
+<h3 id="parameter-identifiability">Parameter Identifiability</h3>
+<p>The Fisher Information Matrix (FIM) is computed as:</p>
+<pre><code>F = (1/sigma^2) * X^T * X</code></pre>
+<p>where X is the sensitivity matrix. The covariance matrix of the
+estimated parameters is approximately:</p>
+<pre><code>V ≈ sigma^2 * (X^T * X)^(-1)</code></pre>
+<p>Parameters are identifiable if the FIM is well-conditioned (all
+eigenvalues are bounded away from zero).</p>
+<h3 id="results-1">Results</h3>
+<figure>
+<img role="img" aria-label="SIR Sensitivities" src="Figures/8_8_1.jpg" alt="SIR Sensitivities" />
+<figcaption aria-hidden="true">SIR Sensitivities</figcaption>
+</figure>
+<p>The sensitivity plots show how each parameter influences the infected
+population over time.</p>
+<figure>
+<img role="img" aria-label="Parameter Correlations" src="Figures/8_8_2.jpg" alt="Parameter Correlations" />
+<figcaption aria-hidden="true">Parameter Correlations</figcaption>
+</figure>
+<figure>
+<img role="img" aria-label="Identifiability Analysis" src="Figures/8_8_3.jpg" alt="Identifiability Analysis" />
+<figcaption aria-hidden="true">Identifiability Analysis</figcaption>
+</figure>
+<figure>
+<img role="img" aria-label="Fisher Information" src="Figures/8_8_4.jpg" alt="Fisher Information" />
+<figcaption aria-hidden="true">Fisher Information</figcaption>
+</figure>
+<h2 id="problem-3-heat-equation-parameter-identifiability">Problem 3:
+Heat Equation Parameter Identifiability</h2>
+<h3 id="background-2">Background</h3>
+<p>We analyze a heat conduction problem in a rod with convective
+boundary conditions. The steady-state temperature distribution depends
+on thermal conductivity and convection coefficients.</p>
+<h3 id="governing-equations">Governing Equations</h3>
+<p>The steady-state heat equation is:</p>
+<pre><code>d/dx(k * dT/dx) = 0</code></pre>
+<p>with boundary conditions involving convective heat transfer.</p>
+<h3 id="identifiability-analysis">Identifiability Analysis</h3>
+<p>We compute the sensitivity of temperature with respect to model
+parameters and construct the Fisher Information Matrix to assess
+parameter identifiability.</p>
+<h3 id="results-2">Results</h3>
+<figure>
+<img role="img" aria-label="Heat Equation Sensitivities" src="Figures/8_9_1.jpg" alt="Heat Equation Sensitivities" />
+<figcaption aria-hidden="true">Heat Equation Sensitivities</figcaption>
+</figure>
+<figure>
+<img role="img" aria-label="Parameter Correlations" src="Figures/8_9_2.jpg" alt="Parameter Correlations" />
+<figcaption aria-hidden="true">Parameter Correlations</figcaption>
+</figure>
+<figure>
+<img role="img" aria-label="Eigenvalue Analysis" src="Figures/8_9_3.jpg" alt="Eigenvalue Analysis" />
+<figcaption aria-hidden="true">Eigenvalue Analysis</figcaption>
+</figure>
+<h2 id="problem-4-global-sensitivity-analysis">Problem 4: Global
+Sensitivity Analysis</h2>
+<h3 id="background-3">Background</h3>
+<p>Global sensitivity analysis methods explore the entire parameter
+space rather than just local perturbations. We apply two methods:</p>
+<ol type="1">
+<li>Morris screening (elementary effects)</li>
+<li>Sobol indices (variance-based)</li>
+</ol>
+<h3 id="morris-screening">Morris Screening</h3>
+<p>The Morris method computes elementary effects by taking one-at-a-time
+perturbations at random points in the parameter space. For each
+parameter, we compute:</p>
+<ul>
+<li>Mean of absolute elementary effects (importance)</li>
+<li>Standard deviation of elementary effects
+(interaction/nonlinearity)</li>
+</ul>
+<h3 id="sobol-indices">Sobol Indices</h3>
+<p>Sobol indices decompose the output variance into contributions from
+individual parameters and their interactions:</p>
+<ul>
+<li>First-order index Si: fraction of variance due to parameter i
+alone</li>
+<li>Total-effect index STi: fraction of variance due to parameter i
+including interactions</li>
+</ul>
+<h3 id="results-3">Results</h3>
+<figure>
+<img role="img" aria-label="Morris Screening Results" src="Figures/9_6_1.jpg" alt="Morris Screening Results" />
+<figcaption aria-hidden="true">Morris Screening Results</figcaption>
+</figure>
+<p>Parameters with high mean absolute effect are important. Parameters
+with high standard deviation show strong interactions or nonlinear
+effects.</p>
+<figure>
+<img role="img" aria-label="Sobol Indices" src="Figures/9_6_2.jpg" alt="Sobol Indices" />
+<figcaption aria-hidden="true">Sobol Indices</figcaption>
+</figure>
+<p>The Sobol indices quantify the relative importance of each parameter
+in explaining output variance.</p>
+<h2 id="summary">Summary</h2>
+<p>This project demonstrated several key concepts in sensitivity
+analysis:</p>
+<ol type="1">
+<li><p>The complex step method provides machine-precision derivatives
+without the truncation-roundoff tradeoff of finite differences.</p></li>
+<li><p>Local sensitivity analysis reveals how parameters influence model
+outputs near nominal values.</p></li>
+<li><p>The Fisher Information Matrix connects sensitivities to parameter
+identifiability and estimation uncertainty.</p></li>
+<li><p>Global methods like Morris screening and Sobol indices provide
+complementary information about parameter importance across the entire
+feasible range.</p></li>
+</ol>
+<h2 id="code-files">Code Files</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UQ_8_5.m / UQ_8_5.py</td>
+<td>Spring model sensitivities</td>
+</tr>
+<tr>
+<td>UQ_8_8.m / UQ_8_8.py</td>
+<td>SIR model analysis</td>
+</tr>
+<tr>
+<td>UQ_8_9.m / UQ_8_9.py</td>
+<td>Heat equation identifiability</td>
+</tr>
+<tr>
+<td>UQ_9_6.m / UQ_9_6.py</td>
+<td>Global sensitivity analysis</td>
+</tr>
+</tbody>
+</table>
+<h2 id="references">References</h2>
+<ol type="1">
+<li>Smith, R.C. (2013). Uncertainty Quantification: Theory,
+Implementation, and Applications. SIAM.</li>
+<li>Saltelli, A. et al. (2008). Global Sensitivity Analysis: The Primer.
+Wiley.</li>
+</ol>
+</body>
+</html>

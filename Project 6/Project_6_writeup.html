@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+
+html {
+color: #1a1a1a;
+background-color: #fdfdfd;
+}
+body {
+margin: 0 auto;
+max-width: 36em;
+padding-left: 50px;
+padding-right: 50px;
+padding-top: 50px;
+padding-bottom: 50px;
+hyphens: auto;
+overflow-wrap: break-word;
+text-rendering: optimizeLegibility;
+font-kerning: normal;
+}
+@media (max-width: 600px) {
+body {
+font-size: 0.9em;
+padding: 12px;
+}
+h1 {
+font-size: 1.8em;
+}
+}
+@media print {
+html {
+background-color: white;
+}
+body {
+background-color: transparent;
+color: black;
+font-size: 12pt;
+}
+p, h2, h3 {
+orphans: 3;
+widows: 3;
+}
+h2, h3, h4 {
+page-break-after: avoid;
+}
+}
+p {
+margin: 1em 0;
+}
+a {
+color: #1a1a1a;
+}
+a:visited {
+color: #1a1a1a;
+}
+img {
+max-width: 100%;
+}
+svg {
+height: auto;
+max-width: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+margin-top: 1.4em;
+}
+h5, h6 {
+font-size: 1em;
+font-style: italic;
+}
+h6 {
+font-weight: normal;
+}
+ol, ul {
+padding-left: 1.7em;
+margin-top: 1em;
+}
+li > ol, li > ul {
+margin-top: 0;
+}
+blockquote {
+margin: 1em 0 1em 1.7em;
+padding-left: 1em;
+border-left: 2px solid #e6e6e6;
+color: #606060;
+}
+code {
+font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+font-size: 85%;
+margin: 0;
+hyphens: manual;
+}
+pre {
+margin: 1em 0;
+overflow: auto;
+}
+pre code {
+padding: 0;
+overflow: visible;
+overflow-wrap: normal;
+}
+.sourceCode {
+background-color: transparent;
+overflow: visible;
+}
+hr {
+border: none;
+border-top: 1px solid #1a1a1a;
+height: 1px;
+margin: 1em 0;
+}
+table {
+margin: 1em 0;
+border-collapse: collapse;
+width: 100%;
+overflow-x: auto;
+display: block;
+font-variant-numeric: lining-nums tabular-nums;
+}
+table caption {
+margin-bottom: 0.75em;
+}
+tbody {
+margin-top: 0.5em;
+border-top: 1px solid #1a1a1a;
+border-bottom: 1px solid #1a1a1a;
+}
+th {
+border-top: 1px solid #1a1a1a;
+padding: 0.25em 0.5em 0.25em 0.5em;
+}
+td {
+padding: 0.125em 0.5em 0.25em 0.5em;
+}
+header {
+margin-bottom: 4em;
+text-align: center;
+}
+#TOC li {
+list-style: none;
+}
+#TOC ul {
+padding-left: 1.3em;
+}
+#TOC > ul {
+padding-left: 0;
+}
+#TOC a:not(:hover) {
+text-decoration: none;
+}
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+</head>
+<body>
+<h1 id="project-6-model-discrepancy">Project 6: Model Discrepancy</h1>
+<h2 id="introduction">Introduction</h2>
+<p>In practice, computational models never perfectly represent physical
+reality. Model discrepancy (also called model inadequacy or structural
+uncertainty) refers to the systematic difference between a model’s
+predictions and the true physical process, even when parameters are
+perfectly known.</p>
+<p>This project explores model discrepancy using the Dittus-Boelter
+correlation for heat transfer.</p>
+<h2 id="the-dittus-boelter-equation">The Dittus-Boelter Equation</h2>
+<h3 id="background">Background</h3>
+<p>The Dittus-Boelter equation is an empirical correlation for turbulent
+flow heat transfer:</p>
+<pre><code>Nu = theta_1 * Re^{theta_2} * Pr^{theta_3}</code></pre>
+<p>where: - Nu is the Nusselt number (dimensionless heat transfer
+coefficient) - Re is the Reynolds number (ratio of inertial to viscous
+forces) - Pr is the Prandtl number (ratio of momentum to thermal
+diffusivity) - theta_1, theta_2, theta_3 are empirical coefficients</p>
+<p>The classical values are theta_1 = 0.023, theta_2 = 0.8, theta_3 =
+0.4.</p>
+<h3 id="physical-interpretation">Physical Interpretation</h3>
+<p>The Nusselt number represents the enhancement of heat transfer due to
+convection compared to pure conduction. The correlation captures the
+experimental observation that heat transfer increases with flow rate
+(Re) and depends on the fluid properties (Pr).</p>
+<h2 id="problem-analyzing-model-discrepancy">Problem: Analyzing Model
+Discrepancy</h2>
+<h3 id="data">Data</h3>
+<p>We have experimental measurements of Nu at various (Re, Pr)
+conditions. The data exhibits scatter around the Dittus-Boelter
+predictions.</p>
+<h3 id="sources-of-discrepancy">Sources of Discrepancy</h3>
+<ol type="1">
+<li><strong>Measurement error</strong>: Random noise in the experimental
+data</li>
+<li><strong>Model form error</strong>: The power-law form may not
+exactly represent the physics</li>
+<li><strong>Parameter uncertainty</strong>: The “optimal” parameters may
+vary between experiments</li>
+</ol>
+<h3 id="analysis-approach">Analysis Approach</h3>
+<p>We perform: 1. Nonlinear least squares to estimate the parameters 2.
+Residual analysis to identify systematic patterns 3. MCMC to quantify
+parameter uncertainty 4. Assessment of model adequacy</p>
+<h2 id="parameter-estimation">Parameter Estimation</h2>
+<h3 id="initial-estimates">Initial Estimates</h3>
+<p>Starting from the classical values, we optimize using nonlinear least
+squares:</p>
+<pre><code>min_{theta} sum_i [Nu_data(i) - Nu_model(Re_i, Pr_i; theta)]^2</code></pre>
+<h3 id="sensitivity-matrix">Sensitivity Matrix</h3>
+<p>The Jacobian matrix contains partial derivatives:</p>
+<pre><code>X_ij = partial Nu_i / partial theta_j</code></pre>
+<p>For the Dittus-Boelter model: - partial Nu / partial theta_1 =
+Re^{theta_2} * Pr^{theta_3} - partial Nu / partial theta_2 = theta_1 *
+Re^{theta_2} * Pr^{theta_3} * ln(Re) - partial Nu / partial theta_3 =
+theta_1 * Re^{theta_2} * Pr^{theta_3} * ln(Pr)</p>
+<h3 id="parameter-identifiability">Parameter Identifiability</h3>
+<p>We compute the Fisher Information Matrix and check for
+ill-conditioning using SVD:</p>
+<pre><code>F = X^T X</code></pre>
+<p>Parameters are identifiable if F is well-conditioned.</p>
+<h2 id="residual-analysis">Residual Analysis</h2>
+<h3 id="checking-model-adequacy">Checking Model Adequacy</h3>
+<p>We plot residuals (data - model predictions) against predicted
+values:</p>
+<figure>
+<embed role="img" src="Figures&amp;Data/11.eps"></embed>
+<figcaption aria-hidden="true">Residual Plot Initial</figcaption>
+</figure>
+<p>A good model should have residuals that: - Are randomly scattered
+around zero - Show constant variance (homoscedasticity) - Have no
+systematic patterns</p>
+<h3 id="results">Results</h3>
+<figure>
+<embed role="img" src="Figures&amp;Data/12.eps"></embed>
+<figcaption aria-hidden="true">Residual Plot After
+Estimation</figcaption>
+</figure>
+<p>The residuals fall within the 2-sigma bounds, indicating reasonable
+model fit.</p>
+<h2 id="bayesian-analysis">Bayesian Analysis</h2>
+<h3 id="mcmc-implementation">MCMC Implementation</h3>
+<p>We sample from the posterior distribution:</p>
+<pre><code>p(theta, sigma^2 | data) proportional to p(data | theta, sigma^2) * p(theta) * p(sigma^2)</code></pre>
+<p>Using DRAM with 50,000 samples (10,000 burn-in).</p>
+<h3 id="results-1">Results</h3>
+<figure>
+<embed role="img" src="Figures&amp;Data/4.eps"></embed>
+<figcaption aria-hidden="true">Parameter Chains</figcaption>
+</figure>
+<p>The chains show good mixing after burn-in.</p>
+<figure>
+<embed role="img" src="Figures&amp;Data/5.eps"></embed>
+<figcaption aria-hidden="true">Parameter Densities</figcaption>
+</figure>
+<figure>
+<embed role="img" src="Figures&amp;Data/6.eps"></embed>
+<figcaption aria-hidden="true">Pairwise Scatter</figcaption>
+</figure>
+<p>The posterior distributions reveal: - Moderate uncertainty in all
+parameters - Strong correlation between theta_1 and theta_2 - The data
+are informative about all parameters</p>
+<figure>
+<embed role="img" src="Figures&amp;Data/7.eps"></embed>
+<figcaption aria-hidden="true">Variance Chain</figcaption>
+</figure>
+<h2 id="model-discrepancy-formulation">Model Discrepancy
+Formulation</h2>
+<h3 id="statistical-model">Statistical Model</h3>
+<p>A more complete model acknowledges discrepancy:</p>
+<pre><code>y = f(x; theta) + delta(x) + epsilon</code></pre>
+<p>where: - f(x; theta) is the computational model - delta(x) is the
+model discrepancy (systematic) - epsilon is measurement error
+(random)</p>
+<h3 id="challenges">Challenges</h3>
+<p>Separating model discrepancy from parameter uncertainty is difficult
+without additional information. Common approaches include: - Using
+multiple data sources - Physical constraints on the discrepancy -
+Hierarchical models</p>
+<h2 id="summary">Summary</h2>
+<p>Key findings from this project:</p>
+<ol type="1">
+<li><p>The Dittus-Boelter model provides reasonable predictions, but
+residuals suggest some systematic model error.</p></li>
+<li><p>All three parameters are identifiable from the data.</p></li>
+<li><p>MCMC reveals correlations between parameters that would be missed
+by point estimates.</p></li>
+<li><p>Model discrepancy is an important source of uncertainty that
+complements parameter uncertainty.</p></li>
+</ol>
+<h2 id="code-files">Code Files</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Final.m / Final.py</td>
+<td>Complete analysis</td>
+</tr>
+<tr>
+<td>PSS_SVD.m</td>
+<td>Parameter subset selection using SVD</td>
+</tr>
+</tbody>
+</table>
+<h2 id="references">References</h2>
+<ol type="1">
+<li>Kennedy, M.C. and O’Hagan, A. (2001). Bayesian calibration of
+computer models. JRSS B.</li>
+<li>Smith, R.C. (2013). Uncertainty Quantification. SIAM.</li>
+</ol>
+</body>
+</html>

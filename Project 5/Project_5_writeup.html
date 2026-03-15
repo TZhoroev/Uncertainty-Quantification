@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+
+html {
+color: #1a1a1a;
+background-color: #fdfdfd;
+}
+body {
+margin: 0 auto;
+max-width: 36em;
+padding-left: 50px;
+padding-right: 50px;
+padding-top: 50px;
+padding-bottom: 50px;
+hyphens: auto;
+overflow-wrap: break-word;
+text-rendering: optimizeLegibility;
+font-kerning: normal;
+}
+@media (max-width: 600px) {
+body {
+font-size: 0.9em;
+padding: 12px;
+}
+h1 {
+font-size: 1.8em;
+}
+}
+@media print {
+html {
+background-color: white;
+}
+body {
+background-color: transparent;
+color: black;
+font-size: 12pt;
+}
+p, h2, h3 {
+orphans: 3;
+widows: 3;
+}
+h2, h3, h4 {
+page-break-after: avoid;
+}
+}
+p {
+margin: 1em 0;
+}
+a {
+color: #1a1a1a;
+}
+a:visited {
+color: #1a1a1a;
+}
+img {
+max-width: 100%;
+}
+svg {
+height: auto;
+max-width: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+margin-top: 1.4em;
+}
+h5, h6 {
+font-size: 1em;
+font-style: italic;
+}
+h6 {
+font-weight: normal;
+}
+ol, ul {
+padding-left: 1.7em;
+margin-top: 1em;
+}
+li > ol, li > ul {
+margin-top: 0;
+}
+blockquote {
+margin: 1em 0 1em 1.7em;
+padding-left: 1em;
+border-left: 2px solid #e6e6e6;
+color: #606060;
+}
+code {
+font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+font-size: 85%;
+margin: 0;
+hyphens: manual;
+}
+pre {
+margin: 1em 0;
+overflow: auto;
+}
+pre code {
+padding: 0;
+overflow: visible;
+overflow-wrap: normal;
+}
+.sourceCode {
+background-color: transparent;
+overflow: visible;
+}
+hr {
+border: none;
+border-top: 1px solid #1a1a1a;
+height: 1px;
+margin: 1em 0;
+}
+table {
+margin: 1em 0;
+border-collapse: collapse;
+width: 100%;
+overflow-x: auto;
+display: block;
+font-variant-numeric: lining-nums tabular-nums;
+}
+table caption {
+margin-bottom: 0.75em;
+}
+tbody {
+margin-top: 0.5em;
+border-top: 1px solid #1a1a1a;
+border-bottom: 1px solid #1a1a1a;
+}
+th {
+border-top: 1px solid #1a1a1a;
+padding: 0.25em 0.5em 0.25em 0.5em;
+}
+td {
+padding: 0.125em 0.5em 0.25em 0.5em;
+}
+header {
+margin-bottom: 4em;
+text-align: center;
+}
+#TOC li {
+list-style: none;
+}
+#TOC ul {
+padding-left: 1.3em;
+}
+#TOC > ul {
+padding-left: 0;
+}
+#TOC a:not(:hover) {
+text-decoration: none;
+}
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+</head>
+<body>
+<h1 id="project-5-surrogate-models">Project 5: Surrogate Models</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Complex computational models can be expensive to evaluate, making
+tasks like uncertainty propagation and optimization computationally
+prohibitive. Surrogate models (also called metamodels or emulators)
+provide fast approximations to expensive simulations.</p>
+<p>This project explores polynomial surrogates and Gaussian process
+regression as surrogate modeling techniques.</p>
+<h2 id="problem-1-polynomial-surrogate-with-latin-hypercube-sampling">Problem
+1: Polynomial Surrogate with Latin Hypercube Sampling</h2>
+<h3 id="background">Background</h3>
+<p>We build a polynomial surrogate model using Latin Hypercube Sampling
+(LHS) to efficiently sample the parameter space.</p>
+<h3 id="latin-hypercube-sampling">Latin Hypercube Sampling</h3>
+<p>LHS creates a space-filling design by: 1. Dividing each parameter
+range into n equal intervals 2. Sampling once from each interval 3.
+Randomly pairing the samples across dimensions</p>
+<p>This ensures better coverage than random sampling while maintaining
+the marginal distributions.</p>
+<h3 id="polynomial-surrogate">Polynomial Surrogate</h3>
+<p>We approximate the expensive function f(x) with a polynomial:</p>
+<pre><code>f_hat(x) = sum_j c_j * phi_j(x)</code></pre>
+<p>where phi_j are polynomial basis functions (e.g., monomials, Legendre
+polynomials).</p>
+<p>The coefficients are found by least squares:</p>
+<pre><code>c = (Phi^T Phi)^(-1) Phi^T y</code></pre>
+<p>where Phi_ij = phi_j(x_i) is the design matrix.</p>
+<h3 id="results">Results</h3>
+<figure>
+<embed role="img" src="Figures&amp;Data/11.eps"></embed>
+<figcaption aria-hidden="true">LHS Sample Points</figcaption>
+</figure>
+<p>The Latin Hypercube design provides good coverage of the parameter
+space with fewer points than a full grid.</p>
+<figure>
+<embed role="img" src="Figures&amp;Data/12.eps"></embed>
+<figcaption aria-hidden="true">Surrogate Fit</figcaption>
+</figure>
+<p>The polynomial surrogate captures the main features of the true
+function.</p>
+<h2 id="problem-2-legendre-polynomial-surrogate">Problem 2: Legendre
+Polynomial Surrogate</h2>
+<h3 id="background-1">Background</h3>
+<p>Legendre polynomials form an orthogonal basis on [-1, 1], which
+provides numerical stability for regression.</p>
+<h3 id="legendre-polynomials">Legendre Polynomials</h3>
+<p>The first few Legendre polynomials are: - P_0(x) = 1 - P_1(x) = x -
+P_2(x) = (3x^2 - 1)/2 - P_3(x) = (5x^3 - 3x)/2</p>
+<p>They satisfy the orthogonality relation:</p>
+<pre><code>integral_{-1}^{1} P_m(x) P_n(x) dx = 2/(2n+1) * delta_{mn}</code></pre>
+<h3 id="surrogate-construction">Surrogate Construction</h3>
+<p>For multi-dimensional problems, we use tensor products of 1D Legendre
+polynomials or total-degree truncation to control the number of
+terms.</p>
+<h3 id="results-1">Results</h3>
+<figure>
+<embed role="img" src="Figures&amp;Data/4.eps"></embed>
+<figcaption aria-hidden="true">Legendre Basis Functions</figcaption>
+</figure>
+<figure>
+<embed role="img" src="Figures&amp;Data/5.eps"></embed>
+<figcaption aria-hidden="true">Legendre Surrogate Error</figcaption>
+</figure>
+<p>The Legendre basis provides a stable and accurate surrogate
+representation.</p>
+<h2 id="problem-3-gaussian-process-regression">Problem 3: Gaussian
+Process Regression</h2>
+<h3 id="background-2">Background</h3>
+<p>Gaussian Process (GP) regression is a non-parametric approach that
+treats the unknown function as a realization of a Gaussian process.</p>
+<h3 id="gp-prior">GP Prior</h3>
+<p>A Gaussian process is fully specified by: - Mean function: m(x) =
+E[f(x)] - Covariance function: k(x, x’) = Cov[f(x), f(x’)]</p>
+<p>Common covariance functions include:</p>
+<p><strong>Squared Exponential (RBF):</strong> k(x, x’) = sigma_f^2 *
+exp(-||x - x’||^2 / (2 * l^2))</p>
+<p><strong>Matern 5/2:</strong> k(x, x’) = sigma_f^2 * (1 +
+sqrt(5)<em>r/l + 5</em>r<sup>2/(3*l</sup>2)) * exp(-sqrt(5)*r/l)</p>
+<p>where r = ||x - x’||.</p>
+<h3 id="gp-posterior">GP Posterior</h3>
+<p>Given training data (X, y), the posterior predictive distribution at
+test point x* is:</p>
+<pre><code>f(x*) | X, y ~ N(mu*, sigma*^2)</code></pre>
+<p>where: mu* = k(x<em>, X) [K + sigma_n^2 I]^(-1) y sigma</em>^2 =
+k(x<em>, x</em>) - k(x<em>, X) [K + sigma_n^2 I]^(-1) k(X, x</em>)</p>
+<p>and K_ij = k(x_i, x_j).</p>
+<h3 id="results-2">Results</h3>
+<figure>
+<embed role="img" src="Figures&amp;Data/6.eps"></embed>
+<figcaption aria-hidden="true">GP Fit with Uncertainty</figcaption>
+</figure>
+<p>The GP provides both a mean prediction and uncertainty bands. The
+uncertainty increases away from training points.</p>
+<figure>
+<embed role="img" src="Figures&amp;Data/7.eps"></embed>
+<figcaption aria-hidden="true">GP Hyperparameter Effects</figcaption>
+</figure>
+<p>The length scale l controls the smoothness, and sigma_f controls the
+amplitude of variations.</p>
+<h2 id="comparison-of-methods">Comparison of Methods</h2>
+<table>
+<colgroup>
+<col style="width: 40%" />
+<col style="width: 30%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr>
+<th>Method</th>
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Polynomial</td>
+<td>Simple, fast evaluation</td>
+<td>May need many terms for complex functions</td>
+</tr>
+<tr>
+<td>Legendre</td>
+<td>Numerically stable</td>
+<td>Limited flexibility</td>
+</tr>
+<tr>
+<td>Gaussian Process</td>
+<td>Uncertainty quantification, flexible</td>
+<td>Scales poorly with data size</td>
+</tr>
+</tbody>
+</table>
+<h2 id="summary">Summary</h2>
+<p>Key concepts covered:</p>
+<ol type="1">
+<li><p><strong>Latin Hypercube Sampling</strong> provides efficient
+space-filling designs.</p></li>
+<li><p><strong>Polynomial surrogates</strong> are simple and fast but
+may require careful basis selection.</p></li>
+<li><p><strong>Gaussian processes</strong> provide principled
+uncertainty quantification and adapt to data automatically.</p></li>
+<li><p>The choice of surrogate depends on the problem: dimensionality,
+smoothness, and whether uncertainty estimates are needed.</p></li>
+</ol>
+<h2 id="code-files">Code Files</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Problem1.m / Problem1.py</td>
+<td>Polynomial surrogate with LHS</td>
+</tr>
+<tr>
+<td>Problem2.m / Problem2.py</td>
+<td>Legendre polynomial surrogate</td>
+</tr>
+<tr>
+<td>Problem3.m / Problem3.py</td>
+<td>Gaussian process regression</td>
+</tr>
+</tbody>
+</table>
+<h2 id="references">References</h2>
+<ol type="1">
+<li>Rasmussen, C.E. and Williams, C.K.I. (2006). Gaussian Processes for
+Machine Learning. MIT Press.</li>
+<li>Xiu, D. (2010). Numerical Methods for Stochastic Computations.
+Princeton University Press.</li>
+</ol>
+</body>
+</html>
