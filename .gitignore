@@ -1,0 +1,38 @@
+# macOS system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# MATLAB temporary files
+*.asv
+*.m~
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+*.egg
+.ipynb_checkpoints/
+.venv/
+venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Temporary files
+*~
+\#*\#
+*.log
+*.aux
+*.out
+*.synctex.gz

@@ -1,90 +1,206 @@
-# Uncertainty-Quantification
+<p align="center">
+  <img src="UQ.png" alt="Uncertainty Quantification" width="600"/>
+</p>
 
-![Plot](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/UQ.png)
+<h1 align="center">Uncertainty Quantification</h1>
 
-This course covers the following topics :
-  * Determine the sources and impacts of input and response uncertainties in models arising in their discipline as well as prototypical weather, climate, hydrology, nuclear and biology models.
-  * Explain the basic probability, stochastic process and statistics concepts required for uncertainty quantification.
-  * Formulate models in a manner that isolates the influential parameters and facilitates statistical analysis. This includes the use of local and global sensitivity analysis techniques.
-  * Construct surrogate models for complex processes that retain the fundamental underlying behavior while providing the computational efficiency required for model calibration and uncertainty propagation.
-  * Compute confidence intervals using frequentist analysis and employ Markov chain Monte Carlo methods to construct posterior distributions and credible intervals for parameters. Be able to verify the accuracy of distributions constructed using Bayesian analysis.
-  * Compute confidence, credible and prediction intervals for model responses and quantities of interest using sampling techniques and numerical stochastic spectral methods.
-  
-  - ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) Required Toolboxes: [Optimization Toolbox](https://www.mathworks.com/products/optimization.html) and [Global Optimization Toolbox](https://www.mathworks.com/products/global-optimization.html)
-  - ![#c5f015](https://placehold.co/15x15/c5f015/c5f015.png) Required Package: [MCMC for MATLAB](https://mjlaine.github.io/mcmcstat/)
-  
- [Project 1](https://github.com/TZhoroev/Uncertainty-Quantification/tree/main/Project%201): 
- 
-  - Learned the various methods, including analytical, finite difference, and complex-step approximations, to compute the sensitivity equations of the models with respect to each parameter of the model. 
-  - Creating and employing the Fisher (information) matrix to perform local sensitivity analysis and identify an identifiable subset of parameters. 
-  - Studied different statistical distances to compare the distributions. 
-  - Covered different algorithm to perform global sensitivity analysis to the model.
- 
- 1. [Problem 1: Compute sensitivities of spring model.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%201/UQ_8_5.m)
- 2. [Problem 2: Compute sensitivities of SIR model and find identifible subset of parameters.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%201/UQ_8_8.m)
- 3. [Problem 3: Find identifible subset of parameters of the heat equation using given observation data.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%201/UQ_8_9.m)
- 4. [Problem 4: Apply global sensitivity algorithms: Morris screening, Sobol indexes and Saltelli algorithm for Helmholtz energy model](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%201/UQ_9_6.m)
- * *[Project Writeup](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%201/Project_1_writeup.pdf)*
- 
- [Project 2](https://github.com/TZhoroev/Uncertainty-Quantification/tree/main/Project%202)
- 
-  - Obtain the identifiable subsets using gradient bases activa subspace contructions.
-  - Learned how to use the provided observational data to calculate the model's parameters and parameter distributions.
-  - Create and solve a constrained or unconstrained optimization problem based on the physical and biological constraints of the parameters. 
+<p align="center">
+  <strong>A comprehensive collection of projects covering computational methods for uncertainty quantification in mathematical models</strong>
+</p>
 
- 1. [Problem 1: Using non-linear constraint optimization find the parameters of the heat model for copper rod.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%202/Problem1.m)
- 2. [Problem 2: Compute OLS estimate for the model parameters and variance of the Helmholtz energy model.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%202/Problem2.m)
- 3. [Problem 3: Find parameter distributions of the SIR model.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%202/Problem3.m)
- * *[Project Writeup](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%202/Project_2_writeup.pdf)*
- 
- 
- [Project 3](https://github.com/TZhoroev/Uncertainty-Quantification/tree/main/Project%202):
- 
-  - Learned how to obtain the parameter distributions using Bayesian methods.
-  - Disscussed the theory and application of Markov Chain Monte Carlo methods for calculating posterior distributions. The advantages and disadvantages of this method in comparison to other adaptive methods.
-  - The following posterior estimation algorithms are covered:
-     -  Metropolis, Hamiltonian Monte Carlo, the Metropolis-adjusted Langevin algorithm, Delayed Rejection Adaptive Metropolis, etc., and their use cases. 
-  - The failure cases of the posterior sampling algorithms and Bayesian parameter estimation are covered.
-  - How to Apply Bayesian Methods to find the identifiable subset of parameters.
-  
-  
- 1. [Problem 1: Compare the posterior distributions of the parameters for the heat equation.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%203/Problem1.m)
- 2. [Problem 2: Find the parameters using optimization and Bayesian optimization. Compare the results and identify the issues with the algebraic dependency on MCMC algorithms.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%203/Problem2.m)
- 3. [Problem 3: Obtain the parameter distribution using different algorithms for the Helmholtz energy model.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%203/Problem3.m)
-  * *[Project Writeup](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%203/Project_3_writeup.pdf)*
-  
-  
-  [Project 4](https://github.com/TZhoroev/Uncertainty-Quantification/tree/main/Project%204):
-  
-   - In previous lectures, we covered how to determine the distributions for parameters. Hence, the next reasonable question is, "How do we efficiently propagate input uncertainties through models?"
-   - Using uncertainty propagation, we obtained the mean response, credible intervals, and prediction intervals for the quantity of interest..
-   - We learned sampling and perturbation methods for uncertainty propagation in frequentist and Bayesian techniques.
- 
- 1. [Problem 1: Obtain the frequentist confidence and prediction intervals for the height-weight model in the calibration and extrapolation domains.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%204/Problem1.m)
- 2. [Problem 2: Obtain the Bayesian credible and prediction intervals for the heat model of the aluminum rod in the calibration domain.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%204/Problem2.m)
- 3. [Problem 3: Obtain the Bayesian credible and prediction intervals for the SIR model in the calibration domain using different observational datasets.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%204/Problem3a.m)
- 4. [Problem 4: Obtain the frequentist confidence and prediction intervals for the SIR model in the calibration domain using different observational datasets. Then, compare the results with the previous problem's results.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%204/Problem4.m)
-  * *[Project Writeup](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%204/Project_4_writeup.pdf)*
-  
-  
-   [Project 5](https://github.com/TZhoroev/Uncertainty-Quantification/tree/main/Project%205):
-   
-   
-   - We covered the techniques for surrogate and reduced-order models.
-   - General polynomial methods: Sparse grid techniques and importance of the latin hypercube sampling for surrogate models.
-   - Stochastic Galerkin Methods: Projection methods, the algorithms are available in Sandia Dakota package for high dimensional models.
-   - Statistical Surrogate Models: Gaussian process or Kriging representations, Neural Networks.
- 
- 1. [Problem 1: Find the 8th - order polynomial surrogate model using random sampling and Latin hypercube samplings. Discuss the limitations on extrapolation domains. ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%205/Problem1.m)
- 2. [Problem 2: Find the Legendre surrogate model using Discrete projection and Monte Carlo methods. ](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%205/Problem2.m)
- 3. [Problem 3: Find the Gaussian surraget model of given dataset.](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%205/Problem3.m)
-  * *[Project Writeup](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%205/Project_5_writeup.pdf)*
-  
- [Project 6](https://github.com/TZhoroev/Uncertainty-Quantification/tree/main/Project%206):
- 
-  - Quantification of the physical and surrogate model discrepancies
- 
- 1. [Problem 1: Explore the Dittus-Boelter equation](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%206/Final.m)
-  * *[Project Writeup](https://github.com/TZhoroev/Uncertainty-Quantification/blob/main/Project%206/Project_6_writeup.pdf)*
-  
-  
+<p align="center">
+  <img src="https://img.shields.io/badge/MATLAB-R2021a+-orange?style=for-the-badge&logo=mathworks" alt="MATLAB"/>
+  <img src="https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
+  <img src="https://img.shields.io/badge/NumPy-Scientific-013243?style=for-the-badge&logo=numpy" alt="NumPy"/>
+  <img src="https://img.shields.io/badge/SciPy-Computing-8CAAE6?style=for-the-badge&logo=scipy" alt="SciPy"/>
+</p>
+
+---
+
+## Overview
+
+This repository contains implementations in both **MATLAB** and **Python** covering fundamental and advanced topics in uncertainty quantification:
+
+- Sensitivity analysis (local and global)
+- Parameter estimation and identifiability
+- Bayesian inference and MCMC methods
+- Uncertainty propagation
+- Surrogate modeling techniques
+- Model discrepancy quantification
+
+---
+
+## Course Topics
+
+| Topic | Description |
+|-------|-------------|
+| **Sensitivity Analysis** | Local (finite difference, complex-step) and global (Morris, Sobol) methods |
+| **Parameter Estimation** | OLS, MLE, constrained optimization |
+| **Bayesian Inference** | Prior specification, posterior computation, MCMC algorithms |
+| **Uncertainty Propagation** | Confidence intervals, credible intervals, prediction intervals |
+| **Surrogate Models** | Polynomial regression, Gaussian processes, sparse grids |
+| **Model Discrepancy** | Quantifying differences between physical and computational models |
+
+---
+
+## Requirements
+
+### MATLAB
+- MATLAB R2021a or later
+- [Optimization Toolbox](https://www.mathworks.com/products/optimization.html)
+- [Global Optimization Toolbox](https://www.mathworks.com/products/global-optimization.html)
+- [MCMC for MATLAB](https://mjlaine.github.io/mcmcstat/) (for Project 3)
+
+### Python
+```bash
+pip install -r requirements.txt
+```
+
+Required packages: `numpy`, `scipy`, `matplotlib`, `statsmodels`
+
+---
+
+## Project 1: Sensitivity Analysis
+
+**Topics:** Local and global sensitivity analysis, Fisher information matrix, parameter identifiability
+
+| Problem | Description | MATLAB | Python |
+|---------|-------------|--------|--------|
+| 1 | Compute sensitivities of spring model | [UQ_8_5.m](Project%201/UQ_8_5.m) | [UQ_8_5.py](Project%201/UQ_8_5.py) |
+| 2 | SIR model sensitivities and identifiability | [UQ_8_8.m](Project%201/UQ_8_8.m) | [UQ_8_8.py](Project%201/UQ_8_8.py) |
+| 3 | Heat equation parameter identifiability | [UQ_8_9.m](Project%201/UQ_8_9.m) | [UQ_8_9.py](Project%201/UQ_8_9.py) |
+| 4 | Global sensitivity (Morris, Sobol) for Helmholtz model | [UQ_9_6.m](Project%201/UQ_9_6.m) | [UQ_9_6.py](Project%201/UQ_9_6.py) |
+
+[Project Writeup (PDF)](Project%201/Project_1_writeup.pdf)
+
+---
+
+## Project 2: Parameter Estimation
+
+**Topics:** OLS estimation, constrained optimization, covariance estimation
+
+| Problem | Description | MATLAB | Python |
+|---------|-------------|--------|--------|
+| 1 | Heat model parameter estimation (copper rod) | [Problem1.m](Project%202/Problem1.m) | [Problem1.py](Project%202/Problem1.py) |
+| 2 | OLS for Helmholtz energy model | [Problem2.m](Project%202/Problem2.m) | [Problem2.py](Project%202/Problem2.py) |
+| 3 | SIR model parameter distributions | [Problem3.m](Project%202/Problem3.m) | [Problem3.py](Project%202/Problem3.py) |
+
+[Project Writeup (PDF)](Project%202/Project_2_writeup.pdf)
+
+---
+
+## Project 3: Bayesian Inference and MCMC
+
+**Topics:** Metropolis-Hastings, DRAM, posterior distributions, convergence diagnostics
+
+| Problem | Description | MATLAB | Python |
+|---------|-------------|--------|--------|
+| 1 | Posterior comparison for heat equation | [Problem1.m](Project%203/Problem1.m) | [Problem1.py](Project%203/Problem1.py) |
+| 2 | Optimization vs Bayesian estimation | [Problem2.m](Project%203/Problem2.m) | - |
+| 3 | MCMC for Helmholtz model | [Problem3.m](Project%203/Problem3.m) | - |
+
+[Project Writeup (PDF)](Project%203/Project_3_writeup.pdf)
+
+---
+
+## Project 4: Uncertainty Propagation
+
+**Topics:** Confidence intervals, credible intervals, prediction intervals
+
+| Problem | Description | MATLAB | Python |
+|---------|-------------|--------|--------|
+| 1 | Frequentist intervals for height-weight model | [Problem1.m](Project%204/Problem1.m) | [Problem1.py](Project%204/Problem1.py) |
+| 2 | Bayesian intervals for aluminum rod | [Problem2.m](Project%204/Problem2.m) | - |
+| 3 | SIR model credible intervals | [Problem3a.m](Project%204/Problem3a.m) | - |
+| 4 | Frequentist vs Bayesian comparison | [Problem4.m](Project%204/Problem4.m) | - |
+
+[Project Writeup (PDF)](Project%204/Project_4_writeup.pdf)
+
+---
+
+## Project 5: Surrogate Models
+
+**Topics:** Polynomial surrogates, Latin hypercube sampling, Gaussian processes
+
+| Problem | Description | MATLAB | Python |
+|---------|-------------|--------|--------|
+| 1 | Polynomial surrogate with LHS | [Problem1.m](Project%205/Problem1.m) | [Problem1.py](Project%205/Problem1.py) |
+| 2 | Legendre surrogate model | [Problem2.m](Project%205/Problem2.m) | - |
+| 3 | Gaussian process regression | [Problem3.m](Project%205/Problem3.m) | [Problem3.py](Project%205/Problem3.py) |
+
+[Project Writeup (PDF)](Project%205/Project_5_writeup.pdf)
+
+---
+
+## Project 6: Model Discrepancy
+
+**Topics:** Physical vs surrogate model comparison, Dittus-Boelter equation
+
+| Problem | Description | MATLAB | Python |
+|---------|-------------|--------|--------|
+| 1 | Dittus-Boelter equation analysis | [Final.m](Project%206/Final.m) | - |
+
+[Project Writeup (PDF)](Project%206/Project_6_writeup.pdf)
+
+---
+
+## Key Concepts Implemented
+
+### Sensitivity Analysis Methods
+- **Finite Difference**: First-order approximation of derivatives
+- **Complex-Step**: Machine-precision derivative approximation
+- **Morris Screening**: Efficient global sensitivity screening
+- **Sobol Indices**: Variance-based sensitivity measures
+
+### MCMC Algorithms
+- **Metropolis-Hastings**: Standard random-walk sampler
+- **Adaptive Metropolis**: Self-tuning proposal distribution
+- **DRAM**: Delayed Rejection Adaptive Metropolis
+
+### Surrogate Modeling
+- **Polynomial Regression**: Least squares fitting
+- **Latin Hypercube Sampling**: Space-filling experimental design
+- **Gaussian Process**: Non-parametric probabilistic model
+
+---
+
+## Getting Started
+
+### MATLAB
+```matlab
+% Navigate to project folder
+cd 'Project 1'
+% Run a script
+UQ_8_5
+```
+
+### Python
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run a script
+cd "Project 1"
+python UQ_8_5.py
+```
+
+---
+
+## Learning Outcomes
+
+After studying these materials, you will be able to:
+
+- Compute model sensitivities using analytical and numerical methods
+- Identify estimable parameter subsets using Fisher information
+- Perform global sensitivity analysis with Morris and Sobol methods
+- Estimate parameters using frequentist and Bayesian approaches
+- Implement MCMC algorithms for posterior sampling
+- Construct confidence, credible, and prediction intervals
+- Build surrogate models for computational efficiency
+- Quantify model discrepancy and prediction uncertainty
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
