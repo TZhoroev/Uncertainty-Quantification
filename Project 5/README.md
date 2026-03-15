@@ -1,143 +1,174 @@
 # Project 5: Surrogate Models
 
-## Introduction
+**Math 540: Uncertainty Quantification**
 
-Complex computational models can be expensive to evaluate, making tasks like uncertainty propagation and optimization computationally prohibitive. Surrogate models (also called metamodels or emulators) provide fast approximations to expensive simulations.
+**Author:** Tilekbek Zhoroev
 
-This project explores polynomial surrogates and Gaussian process regression as surrogate modeling techniques.
+---
 
 ## Problem 1: Polynomial Surrogate with Latin Hypercube Sampling
 
-### Background
+### Problem Statement
 
-We build a polynomial surrogate model using Latin Hypercube Sampling (LHS) to efficiently sample the parameter space.
+Consider the function:
 
-### Latin Hypercube Sampling
+$$f(q) = (6q^2 + 3)\sin(6q - 4)$$
 
-LHS creates a space-filling design by:
-1. Dividing each parameter range into n equal intervals
-2. Sampling once from each interval
-3. Randomly pairing the samples across dimensions
+for $q \in [0, 2]$. Plot the function and $M = 15$ random samples $q^m \sim U(0, 2)$ and Latin hypercube samples. For the Latin hypercube samples in qdata.txt, use regression to construct an 8th-order polynomial surrogate $f_s^K(q)$ and compare to $f(q)$ for $q \in [0, 2]$ and $q \in [-0.5, 2.5]$.
 
-This ensures better coverage than random sampling while maintaining the marginal distributions.
+### Solution
 
-### Polynomial Surrogate
+#### Random vs Latin Hypercube Sampling
 
-We approximate the expensive function f(x) with a polynomial:
+We use `rand.m` to generate random samples from $U(0, 1)$, rescaled to $(0, 2)$ using:
 
-    f_hat(x) = sum_j c_j * phi_j(x)
+$$a + (b - a)\eta, \quad \eta \in (0, 1)$$
 
-where phi_j are polynomial basis functions (e.g., monomials, Legendre polynomials).
+with $a = 0$, $b = 2$. Similarly, using `lhsdesign.m` and the same transformation, we obtain Latin hypercube samples.
 
-The coefficients are found by least squares:
+**Key Observations:**
+- Random samples tend to cluster, reducing surrogate accuracy
+- Latin hypercube samples fill the entire interval without clustering while maintaining randomness
 
-    c = (Phi^T Phi)^(-1) Phi^T y
+#### Polynomial Surrogate Construction
 
-where Phi_ij = phi_j(x_i) is the design matrix.
+Using Latin hypercube samples, we compute:
 
-### Results
+$$y = [y^1, \ldots, y^M]^\top, \quad y^i = f(q^i), \quad i = 1, \ldots, M$$
 
-![LHS Sample Points](Figures&Data/11.eps)
+The polynomial surrogate coefficients $u_k$ in:
 
-The Latin Hypercube design provides good coverage of the parameter space with fewer points than a full grid.
+$$f_s^K(q) = \sum_{k=0}^{K} u_k q^k$$
 
-![Surrogate Fit](Figures&Data/12.eps)
+are computed by minimizing the least squares functional:
 
-The polynomial surrogate captures the main features of the true function.
+$$J(u) = \sum_{m=0}^{M} \left[y^m - \sum_{k=0}^{K} u_k (q^m)^k\right]^2 = (y - Xu)^\top (y - Xu)$$
+
+where the design matrix is:
+
+$$X = \begin{bmatrix} 1 & q^1 & (q^1)^2 & \cdots & (q^1)^K \\ 1 & q^2 & (q^2)^2 & \cdots & (q^2)^K \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & q^M & (q^M)^2 & \cdots & (q^M)^K \end{bmatrix}$$
+
+with $M = 15$ samples and $K = 8$ polynomial order.
+
+The optimal solution is:
+
+$$u = (X^\top X)^{-1} X^\top y$$
+
+#### Results
+
+The polynomial surrogate is accurate in the calibration region $[0, 2]$, but performs extremely poorly for extrapolatory predictions in $[-0.5, 2.5]$. This demonstrates the danger of using polynomial surrogates for out-of-data predictions.
+
+![Sampling Comparison](Figures&Data/11.eps)
+
+**Figure 1:** (a) Function, random samples, and Latin hypercube samples; Polynomial surrogate for (b) $q \in [0, 2]$; (c) $q \in [-0.5, 2.5]$.
+
+---
 
 ## Problem 2: Legendre Polynomial Surrogate
 
-### Background
+### Problem Statement
 
-Legendre polynomials form an orthogonal basis on [-1, 1], which provides numerical stability for regression.
+Consider the spring model:
 
-### Legendre Polynomials
+$$\frac{d^2 z}{dt^2} + kz = 0, \quad z(0) = 3, \quad \frac{dz}{dt}(0) = 0$$
 
-The first few Legendre polynomials are:
-- P_0(x) = 1
-- P_1(x) = x
-- P_2(x) = (3x^2 - 1)/2
-- P_3(x) = (5x^3 - 3x)/2
+with solution $z(t, k) = 3\cos(\sqrt{k} \cdot t)$.
 
-They satisfy the orthogonality relation:
+We consider $k \sim U(\bar{k} - \sigma_k, \bar{k} + \sigma_k)$ with $\bar{k} = 8.5$ and $\sigma_k = 0.001$. Construct a Legendre surrogate $f_s^K(t, \xi)$ using $K + 1 = 4$ basis functions $\{\psi_k(\xi)\}_{k=0}^K$ with $\xi \in [-1, 1]$.
 
-    integral_{-1}^{1} P_m(x) P_n(x) dx = 2/(2n+1) * delta_{mn}
+### Solution
 
-### Surrogate Construction
+Define the mapping $g(\xi): [-1, 1] \to [\bar{k} - \sigma_k, \bar{k} + \sigma_k]$:
 
-For multi-dimensional problems, we use tensor products of 1D Legendre polynomials or total-degree truncation to control the number of terms.
+$$g(\xi) = \frac{a + b}{2} + \frac{b - a}{2}\xi$$
 
-### Results
+where $a = \bar{k} - \sigma_k$, $b = \bar{k} + \sigma_k$.
 
-![Legendre Basis Functions](Figures&Data/4.eps)
+The Legendre polynomial surrogate is:
 
-![Legendre Surrogate Error](Figures&Data/5.eps)
+$$f_s^K(t, k) = f_s^K(t, g(\xi)) = \sum_{k=0}^{K} u_k(t)\psi_k(\xi)$$
 
-The Legendre basis provides a stable and accurate surrogate representation.
+#### Coefficient Computation
 
-## Problem 3: Gaussian Process Regression
+Using discrete projections:
 
-### Background
+$$u_k(t) = \frac{1}{\gamma_k} \int_{-1}^{1} f(t, g(\xi))\psi_k(\xi)\rho(\xi) \, d\xi$$
 
-Gaussian Process (GP) regression is a non-parametric approach that treats the unknown function as a realization of a Gaussian process.
+$$= \frac{1}{\gamma_k} \int_{-1}^{1} 3\cos(\sqrt{g(\xi)} \cdot t)\psi_k(\xi)\rho(\xi) \, d\xi$$
 
-### GP Prior
+$$\approx \frac{1}{\gamma_k} \sum_{r=1}^{R} 3\cos(\sqrt{g(\xi_r)} \cdot t)\psi_k(\xi_r)\omega_r$$
 
-A Gaussian process is fully specified by:
-- Mean function: m(x) = E[f(x)]
-- Covariance function: k(x, x') = Cov[f(x), f(x')]
+for $k = 0, \ldots, K$, where $\xi_r$ and $\omega_r$ are Legendre quadrature points and weights ($K = 3$, $R = 10$).
 
-Common covariance functions include:
+#### Mean and Standard Deviation
 
-**Squared Exponential (RBF):**
-    k(x, x') = sigma_f^2 * exp(-||x - x'||^2 / (2 * l^2))
+**Surrogate formulas:**
 
-**Matern 5/2:**
-    k(x, x') = sigma_f^2 * (1 + sqrt(5)*r/l + 5*r^2/(3*l^2)) * exp(-sqrt(5)*r/l)
+$$E[f_s^K(t, \xi)] = u_0(t)$$
 
-where r = ||x - x'||.
+$$\sqrt{\text{var}[f_s^K(t, \xi)]} = \left[\sum_{k=1}^{K} u_k^2(t)\gamma_k\right]^{1/2}$$
 
-### GP Posterior
+**Monte Carlo approximations** with $M = 10^5$ samples:
 
-Given training data (X, y), the posterior predictive distribution at test point x* is:
+$$E[f(t, k)] = \frac{1}{M} \sum_{m=1}^{M} f(t, k^m)$$
 
-    f(x*) | X, y ~ N(mu*, sigma*^2)
+$$\sqrt{\text{var}[f_s^K(t, \xi)]} = \left[\frac{1}{M-1} \sum_{m=1}^{M} [f(t, k^m) - E[f(t, k)]]^2\right]^{1/2}$$
 
-where:
-    mu* = k(x*, X) [K + sigma_n^2 I]^(-1) y
-    sigma*^2 = k(x*, x*) - k(x*, X) [K + sigma_n^2 I]^(-1) k(X, x*)
+#### Results
 
-and K_ij = k(x_i, x_j).
+Both computational methods (discrete projection and Monte Carlo) produce identical results for mean and standard deviation.
 
-### Results
+![Legendre Surrogate Results](Figures&Data/12.eps)
 
-![GP Fit with Uncertainty](Figures&Data/6.eps)
+**Figure 2:** (a) Mean and (b) standard deviation computed using Legendre surrogate with discrete projection and Monte Carlo sampling.
 
-The GP provides both a mean prediction and uncertainty bands. The uncertainty increases away from training points.
+---
 
-![GP Hyperparameter Effects](Figures&Data/7.eps)
+## Problem 3: Gaussian Process Surrogate
 
-The length scale l controls the smoothness, and sigma_f controls the amplitude of variations.
+### Problem Statement
 
-## Comparison of Methods
+For the function $f(q) = (6q^2 + 3)\sin(6q - 4)$ and $M = 15$ Latin hypercube samples from qdata.txt, use `fitrgp.m` to construct a Gaussian process (GP) surrogate using a squared exponential kernel.
 
-| Method | Pros | Cons |
-|--------|------|------|
-| Polynomial | Simple, fast evaluation | May need many terms for complex functions |
-| Legendre | Numerically stable | Limited flexibility |
-| Gaussian Process | Uncertainty quantification, flexible | Scales poorly with data size |
+### Solution
+
+#### Squared Exponential Kernel
+
+We use the squared exponential covariance kernel:
+
+$$c(q, q') = \sigma^2 e^{-(q-q')^2 / 2l^2}$$
+
+with constant mean function $\mu(q) = \mu_0$.
+
+#### Hyperparameter Optimization
+
+Using $M = 15$ training points and `fitrgp.m`, we obtain optimal hyperparameters:
+
+$$\sigma = 16.9326, \quad \mu_0 = 2.6996, \quad l = 0.3491$$
+
+#### Results
+
+**Calibration region $[0, 2]$:** The GP provides accurate predictions with tight confidence intervals near training points.
+
+**Extrapolation region $[-0.5, 2.5]$:** Out-of-data predictions are better than polynomial surrogates. The GP prediction reverts to the prior mean with increased uncertainty, which is more physically reasonable than polynomial extrapolation.
+
+![GP Calibration](Figures&Data/4.eps)
+
+![GP Extrapolation](Figures&Data/5.eps)
+
+**Figure 3:** (a), (c) Covariance function; (b), (d) Training data, mean, and 95% predictive distribution for $q \in [0, 2]$ and $q \in [-0.5, 2.5]$.
+
+---
 
 ## Summary
 
-Key concepts covered:
+| Method | Advantages | Disadvantages |
+|--------|------------|---------------|
+| Polynomial | Simple, fast | Poor extrapolation, requires many terms |
+| Legendre | Orthogonal basis, stable | Limited flexibility |
+| Gaussian Process | Uncertainty quantification, better extrapolation | Computationally expensive for large datasets |
 
-1. **Latin Hypercube Sampling** provides efficient space-filling designs.
-
-2. **Polynomial surrogates** are simple and fast but may require careful basis selection.
-
-3. **Gaussian processes** provide principled uncertainty quantification and adapt to data automatically.
-
-4. The choice of surrogate depends on the problem: dimensionality, smoothness, and whether uncertainty estimates are needed.
+---
 
 ## Code Files
 
@@ -149,5 +180,6 @@ Key concepts covered:
 
 ## References
 
-1. Rasmussen, C.E. and Williams, C.K.I. (2006). Gaussian Processes for Machine Learning. MIT Press.
-2. Xiu, D. (2010). Numerical Methods for Stochastic Computations. Princeton University Press.
+1. Rasmussen, C.E. and Williams, C.K.I. (2006). *Gaussian Processes for Machine Learning*. MIT Press.
+2. Xiu, D. (2010). *Numerical Methods for Stochastic Computations*. Princeton University Press.
+3. Smith, R.C. (2013). *Uncertainty Quantification*. SIAM.

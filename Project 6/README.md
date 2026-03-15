@@ -1,164 +1,149 @@
 # Project 6: Model Discrepancy
 
-## Introduction
+**Math 540: Uncertainty Quantification**
 
-In practice, computational models never perfectly represent physical reality. Model discrepancy (also called model inadequacy or structural uncertainty) refers to the systematic difference between a model's predictions and the true physical process, even when parameters are perfectly known.
+**Author:** Tilekbek Zhoroev
 
-This project explores model discrepancy using the Dittus-Boelter correlation for heat transfer.
+---
 
-## The Dittus-Boelter Equation
+## Problem: Dittus-Boelter Equation Analysis
 
-### Background
+### Problem Statement
 
-The Dittus-Boelter equation is an empirical correlation for turbulent flow heat transfer:
+Consider the Dittus-Boelter equation:
 
-    Nu = theta_1 * Re^{theta_2} * Pr^{theta_3}
+$$Nu = \theta_1 Re^{\theta_2} Pr^{\theta_3}$$
 
-where:
-- Nu is the Nusselt number (dimensionless heat transfer coefficient)
-- Re is the Reynolds number (ratio of inertial to viscous forces)
-- Pr is the Prandtl number (ratio of momentum to thermal diffusivity)
-- theta_1, theta_2, theta_3 are empirical coefficients
+where $Nu$, $Re$, and $Pr$ respectively denote the Nusselt, Reynolds, and Prandtl numbers.
 
-The classical values are theta_1 = 0.023, theta_2 = 0.8, theta_3 = 0.4.
+Reported nominal parameter values are:
 
-### Physical Interpretation
+$$\theta_0 = [0.023, 0.8, 0.4]$$
 
-The Nusselt number represents the enhancement of heat transfer due to convection compared to pure conduction. The correlation captures the experimental observation that heat transfer increases with flow rate (Re) and depends on the fluid properties (Pr).
+Data is provided in db_data.txt where Re = db_data(:,1); Pr = db_data(:,2); Nu = db_data(:,3).
 
-## Problem: Analyzing Model Discrepancy
+Construct the Fisher information matrix and discuss the identifiability of the parameters. Use DRAM to compute posterior densities for the parameters.
 
-### Data
+### Solution
 
-We have experimental measurements of Nu at various (Re, Pr) conditions. The data exhibits scatter around the Dittus-Boelter predictions.
+#### Initial Residual Analysis
 
-### Sources of Discrepancy
+Using the nominal parameter values, we examine the residuals. From Figure 1(a), we observe that the residuals are not identically and independently distributed, indicating that the nominal parameters may not be optimal for this dataset.
 
-1. **Measurement error**: Random noise in the experimental data
-2. **Model form error**: The power-law form may not exactly represent the physics
-3. **Parameter uncertainty**: The "optimal" parameters may vary between experiments
+#### Optimal Parameter Estimation
 
-### Analysis Approach
+Using MATLAB's `lsqnonlin.m`, we obtain optimal parameter values:
 
-We perform:
-1. Nonlinear least squares to estimate the parameters
-2. Residual analysis to identify systematic patterns
-3. MCMC to quantify parameter uncertainty
-4. Assessment of model adequacy
+$$\theta = [0.004, 0.986, 0.411]$$
 
-## Parameter Estimation
+#### Variance Estimation
 
-### Initial Estimates
+With $n = 56$ data points and $p = 3$ parameters, the error variance estimate is:
 
-Starting from the classical values, we optimize using nonlinear least squares:
+$$\sigma^2 = \frac{1}{n-p} \mathbf{R}^\top \mathbf{R} = 162.1507$$
 
-    min_{theta} sum_i [Nu_data(i) - Nu_model(Re_i, Pr_i; theta)]^2
+where $\mathbf{R}$ is the vector of residuals.
 
-### Sensitivity Matrix
+The residual plot using optimal parameters (Figure 1b) shows identically and independently distributed residuals.
 
-The Jacobian matrix contains partial derivatives:
+![Initial Residuals](Figures&Data/11.eps)
 
-    X_ij = partial Nu_i / partial theta_j
+![Optimal Residuals](Figures&Data/12.eps)
 
-For the Dittus-Boelter model:
-- partial Nu / partial theta_1 = Re^{theta_2} * Pr^{theta_3}
-- partial Nu / partial theta_2 = theta_1 * Re^{theta_2} * Pr^{theta_3} * ln(Re)
-- partial Nu / partial theta_3 = theta_1 * Re^{theta_2} * Pr^{theta_3} * ln(Pr)
+**Figure 1:** (a) Residuals with given nominal parameter values; (b) Residuals with optimal parameter values.
 
-### Parameter Identifiability
+#### Sensitivity Matrix
 
-We compute the Fisher Information Matrix and check for ill-conditioning using SVD:
+The sensitivity matrix is:
 
-    F = X^T X
+$$X = \begin{bmatrix} Re_1^{\theta_2} Pr_1^{\theta_3} & \theta_1 Re_1^{\theta_2} Pr_1^{\theta_3} \ln(Re_1) & \theta_1 Re_1^{\theta_2} Pr_1^{\theta_3} \ln(Pr_1) \\ Re_2^{\theta_2} Pr_2^{\theta_3} & \theta_1 Re_2^{\theta_2} Pr_2^{\theta_3} \ln(Re_2) & \theta_1 Re_2^{\theta_2} Pr_2^{\theta_3} \ln(Pr_2) \\ \vdots & \vdots & \vdots \\ Re_n^{\theta_2} Pr_n^{\theta_3} & \theta_1 Re_n^{\theta_2} Pr_n^{\theta_3} \ln(Re_n) & \theta_1 Re_n^{\theta_2} Pr_n^{\theta_3} \ln(Pr_n) \end{bmatrix}_{n \times p}$$
 
-Parameters are identifiable if F is well-conditioned.
+#### Fisher Information Matrix
 
-## Residual Analysis
+The Fisher information matrix is:
 
-### Checking Model Adequacy
+$$F = X^\top X = \begin{bmatrix} 9.3892 \times 10^{10} & 3.5764 \times 10^{9} & 1.3305 \times 10^{9} \\ 3.5764 \times 10^{9} & 1.3700 \times 10^{8} & 4.9713 \times 10^{7} \\ 1.3305 \times 10^{9} & 4.9713 \times 10^{7} & 2.1098 \times 10^{7} \end{bmatrix}$$
 
-We plot residuals (data - model predictions) against predicted values:
+#### Eigenvalue Analysis
 
-![Residual Plot Initial](Figures&Data/11.eps)
+The eigenvalues of the Fisher matrix are:
 
-A good model should have residuals that:
-- Are randomly scattered around zero
-- Show constant variance (homoscedasticity)
-- Have no systematic patterns
+$$\lambda = [2.9325 \times 10^{5}, \quad 2.7239 \times 10^{6}, \quad 9.4047 \times 10^{10}]$$
 
-### Results
+Because all eigenvalues are sufficiently large (bounded away from zero), we conclude that **all parameters are identifiable**.
 
-![Residual Plot After Estimation](Figures&Data/12.eps)
+#### Covariance Matrix
 
-The residuals fall within the 2-sigma bounds, indicating reasonable model fit.
+The covariance matrix is:
 
-## Bayesian Analysis
+$$V = \sigma^2 (X^\top X)^{-1} = \begin{bmatrix} 9.0474 \times 10^{-7} & -2.0102 \times 10^{-5} & -9.6884 \times 10^{-6} \\ -2.0102 \times 10^{-5} & 4.5482 \times 10^{-4} & 1.9604 \times 10^{-4} \\ -9.6884 \times 10^{-6} & 1.9604 \times 10^{-4} & 1.5674 \times 10^{-4} \end{bmatrix}$$
 
-### MCMC Implementation
+### Bayesian Analysis with DRAM
 
-We sample from the posterior distribution:
+We use the optimal parameter values as initial values and the Frequentist covariance matrix as the initial proposal covariance.
 
-    p(theta, sigma^2 | data) proportional to p(data | theta, sigma^2) * p(theta) * p(sigma^2)
+#### Convergence
 
-Using DRAM with 50,000 samples (10,000 burn-in).
+Figure 2 shows the chain plots for each parameter and pairwise sample plots. The MCMC algorithm has converged. The pairwise plots demonstrate parameter correlations, and all parameters are identifiable, consistent with the Frequentist analysis.
 
-### Results
+![Chain Theta1](Figures&Data/4.eps)
 
-![Parameter Chains](Figures&Data/4.eps)
+![Chain Theta2](Figures&Data/5.eps)
 
-The chains show good mixing after burn-in.
+![Chain Theta3](Figures&Data/6.eps)
 
-![Parameter Densities](Figures&Data/5.eps)
+**Figure 2:** Chain plots and pairwise sample plots.
 
-![Pairwise Scatter](Figures&Data/6.eps)
+#### Bayesian Parameter Estimates
 
-The posterior distributions reveal:
-- Moderate uncertainty in all parameters
-- Strong correlation between theta_1 and theta_2
-- The data are informative about all parameters
+$$\theta = [0.004, 0.982, 0.409]$$
 
-![Variance Chain](Figures&Data/7.eps)
+#### Bayesian Variance Estimate
 
-## Model Discrepancy Formulation
+$$\sigma^2 = 168.5046$$
 
-### Statistical Model
+#### Marginal Distributions
 
-A more complete model acknowledges discrepancy:
+The marginal distributions of each parameter are shown in Figure 3.
 
-    y = f(x; theta) + delta(x) + epsilon
+![Marginal Distributions](Figures&Data/7.eps)
 
-where:
-- f(x; theta) is the computational model
-- delta(x) is the model discrepancy (systematic)
-- epsilon is measurement error (random)
+**Figure 3:** Marginal distributions of (a) $\theta_1$; (b) $\theta_2$; (c) $\theta_3$.
 
-### Challenges
+### Comparison of Frequentist and Bayesian Results
 
-Separating model discrepancy from parameter uncertainty is difficult without additional information. Common approaches include:
-- Using multiple data sources
-- Physical constraints on the discrepancy
-- Hierarchical models
+| Parameter | Frequentist | Bayesian |
+|-----------|-------------|----------|
+| $\theta_1$ | 0.004 | 0.004 |
+| $\theta_2$ | 0.986 | 0.982 |
+| $\theta_3$ | 0.411 | 0.409 |
+| $\sigma^2$ | 162.15 | 168.50 |
 
-## Summary
+The Bayesian and Frequentist estimates are in close agreement, validating both approaches.
 
-Key findings from this project:
+### Conclusions
 
-1. The Dittus-Boelter model provides reasonable predictions, but residuals suggest some systematic model error.
+1. The nominal Dittus-Boelter parameters $[0.023, 0.8, 0.4]$ do not fit this dataset well.
 
-2. All three parameters are identifiable from the data.
+2. Optimized parameters $[\sim 0.004, \sim 0.98, \sim 0.41]$ provide better fit.
 
-3. MCMC reveals correlations between parameters that would be missed by point estimates.
+3. All three parameters are identifiable based on the Fisher information analysis.
 
-4. Model discrepancy is an important source of uncertainty that complements parameter uncertainty.
+4. DRAM posterior distributions confirm parameter identifiability through pairwise plots.
+
+5. There is good agreement between Frequentist and Bayesian parameter estimates.
+
+---
 
 ## Code Files
 
 | File | Description |
 |------|-------------|
-| Final.m / Final.py | Complete analysis |
+| Final.m / Final.py | Complete Dittus-Boelter analysis |
 | PSS_SVD.m | Parameter subset selection using SVD |
 
 ## References
 
-1. Kennedy, M.C. and O'Hagan, A. (2001). Bayesian calibration of computer models. JRSS B.
-2. Smith, R.C. (2013). Uncertainty Quantification. SIAM.
+1. Kennedy, M.C. and O'Hagan, A. (2001). Bayesian calibration of computer models. *JRSS B*.
+2. Dittus, F.W. and Boelter, L.M.K. (1930). Heat transfer in automobile radiators of the tubular type. *University of California Publications in Engineering*.
+3. Smith, R.C. (2013). *Uncertainty Quantification*. SIAM.
